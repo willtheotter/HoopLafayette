@@ -15,7 +15,10 @@ export const SectionDivider = ({ theme, variant = 'wave' }: SectionDividerProps)
     lakers: '#FDB927',
     venice: '#0B4F6C',
     mamba: '#B0B7BC',
-    community: '#10B981'
+    community: '#10B981',
+    snl: '#A855F7',
+    'new-balance': '#DC2626',
+    ballislife: '#000000'
   }
 
   const variants = {
