@@ -55,6 +55,24 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
       shadow: 'shadow-[0_0_30px_rgba(0,255,0,0.3)]',
       text: 'text-white',
       border: 'border-green-400'
+    },
+    snl: {
+      gradient: 'bg-gradient-to-r from-purple-800 via-black to-yellow-600',
+      shadow: 'shadow-[0_0_30px_rgba(168,85,247,0.5)]',
+      text: 'text-white',
+      border: 'border-yellow-500'
+    },
+    'new-balance': {
+      gradient: 'bg-gradient-to-r from-red-600 via-purple-600 to-blue-600',
+      shadow: 'shadow-[0_0_30px_rgba(220,38,38,0.5)]',
+      text: 'text-white',
+      border: 'border-blue-400'
+    },
+    ballislife: {
+      gradient: 'bg-gradient-to-r from-white via-gray-100 to-black',
+      shadow: 'shadow-[0_0_30px_rgba(0,0,0,0.5)]',
+      text: 'text-black',
+      border: 'border-yellow-500'
     }
   }
 
