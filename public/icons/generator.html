@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 20px; }
+        .icon-item { text-align: center; }
+        .icon { width: 100px; height: 100px; background: linear-gradient(135deg, #552583, #FDB927); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+        button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Icon Generator</h1>
+    <p>Click each button to download PNG icon</p>
+    <div class="icon-grid" id="icons"></div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const container = document.getElementById('icons');
+        
+        sizes.forEach(size => {
+            const div = document.createElement('div');
+            div.className = 'icon-item';
+            div.innerHTML = `
+                <div class="icon" style="width:${size}px; height:${size}px; font-size:${size/3}px;">🏀</div>
+                <div>${size}x${size}</div>
+                <button onclick="downloadIcon(${size})">Download PNG</button>
+            `;
+            container.appendChild(div);
+        });
+
+        function downloadIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#552583');
+            gradient.addColorStop(1, '#FDB927');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Draw basketball
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size/2}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🏀', size/2, size/2);
+            
+            // Download
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
