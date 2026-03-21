@@ -8,7 +8,6 @@ interface GradientBackgroundProps {
 }
 
 export const GradientBackground = ({ theme, gradient }: GradientBackgroundProps) => {
-  // Theme-based gradients
   const gradients = {
     fire: 'bg-gradient-to-br from-orange-600 via-red-600 to-orange-800',
     owyhee: 'bg-gradient-to-br from-[#5EC2D1] via-[#4FB8C8] to-[#6CC9D6]',
