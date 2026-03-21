@@ -2,7 +2,7 @@ export interface Video {
   id: string
   title?: string
   url: string
-  type: 'youtube' | 'instagram' // Simplified to match SocialEmbed
+  type: 'youtube' | 'instagram'
   category?: string
   date?: string
 }
@@ -25,4 +25,4 @@ export interface Theme {
   pattern?: string
 }
 
-export type PageTheme = 'fire' | 'owyhee' | 'lakers' | 'venice' | 'mamba' | 'community'
+export type PageTheme = 'fire' | 'owyhee' | 'lakers' | 'venice' | 'mamba' | 'community' | 'snl' | 'new-balance' | 'ballislife'
