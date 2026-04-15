@@ -18,63 +18,63 @@ export const ThemeAnimations = ({ theme, children, delay = 0 }: ThemeAnimationPr
           initial: { opacity: 0, scale: 0.9 },
           animate: { opacity: 1, scale: 1 },
           hover: { scale: 1.05 },
-          transition: { duration: 0.3, delay }
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
         }
       case 'venice':
         return {
           initial: { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
           hover: { y: -5 },
-          transition: { duration: 0.3, delay }
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
         }
       case 'mamba':
         return {
           initial: { opacity: 0 },
           animate: { opacity: 1 },
           hover: { scale: 1.02 },
-          transition: { duration: 0.3, delay }
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
         }
       case 'lakers':
         return {
           initial: { opacity: 0, x: -20 },
           animate: { opacity: 1, x: 0 },
           hover: { scale: 1.02, x: 5 },
-          transition: { duration: 0.4, delay }
+          transition: { duration: 0.4, delay, ease: "easeOut" as const }
         }
       case 'owyhee':
         return {
           initial: { opacity: 0, y: 30 },
           animate: { opacity: 1, y: 0 },
           hover: { y: -3 },
-          transition: { duration: 0.4, delay, ease: "easeOut" }
+          transition: { duration: 0.4, delay, ease: "easeOut" as const }
         }
       case 'snl':
         return {
           initial: { opacity: 0, rotate: -5 },
           animate: { opacity: 1, rotate: 0 },
           hover: { rotate: 2 },
-          transition: { duration: 0.35, delay }
+          transition: { duration: 0.35, delay, ease: "easeOut" as const }
         }
       case 'new-balance':
         return {
           initial: { opacity: 0, scale: 0.95 },
           animate: { opacity: 1, scale: 1 },
           hover: { scale: 1.03 },
-          transition: { duration: 0.3, delay }
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
         }
       case 'ballislife':
         return {
           initial: { opacity: 0, y: -20 },
           animate: { opacity: 1, y: 0 },
           hover: { y: -2 },
-          transition: { duration: 0.35, delay }
+          transition: { duration: 0.35, delay, ease: "easeOut" as const }
         }
       default:
         return {
           initial: { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
           hover: { scale: 1.02 },
-          transition: { duration: 0.3, delay }
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
         }
     }
   }
@@ -105,7 +105,7 @@ export const pageVariants = {
     y: 0,
     transition: {
       duration: 0.4,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   },
   exit: { 
@@ -113,7 +113,7 @@ export const pageVariants = {
     y: -20,
     transition: {
       duration: 0.3,
-      ease: "easeIn"
+      ease: "easeIn" as const
     }
   }
 }
@@ -142,7 +142,7 @@ export const itemVariants = {
     scale: 1,
     transition: {
       duration: 0.3,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   }
 }
@@ -158,7 +158,7 @@ export const cardHoverVariants = {
     y: -5,
     transition: {
       duration: 0.2,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   },
   tap: {
@@ -180,7 +180,7 @@ export const fadeInUpVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   }
 }
@@ -196,7 +196,7 @@ export const scaleVariants = {
     opacity: 1,
     transition: {
       duration: 0.4,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   }
 }
@@ -212,7 +212,7 @@ export const slideLeftVariants = {
     opacity: 1,
     transition: {
       duration: 0.4,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   }
 }
@@ -228,7 +228,7 @@ export const slideRightVariants = {
     opacity: 1,
     transition: {
       duration: 0.4,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   }
 }
@@ -238,27 +238,27 @@ export const getThemeSequence = (theme: PageTheme) => {
   const sequences = {
     fire: {
       duration: 0.3,
-      ease: "anticipate",
+      ease: "anticipate" as const,
       scale: 1.05
     },
     mamba: {
       duration: 0.4,
-      ease: "backOut",
+      ease: "backOut" as const,
       scale: 1.02
     },
     venice: {
       duration: 0.35,
-      ease: "easeOut",
+      ease: "easeOut" as const,
       y: -5
     },
     lakers: {
       duration: 0.3,
-      ease: "easeInOut",
+      ease: "easeInOut" as const,
       x: 5
     },
     default: {
       duration: 0.3,
-      ease: "easeOut",
+      ease: "easeOut" as const,
       scale: 1.02
     }
   }
