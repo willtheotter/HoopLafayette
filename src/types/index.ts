@@ -183,6 +183,31 @@ export const themeAnimations = {
     initial: { opacity: 0, x: -20 },
     animate: { opacity: 1, x: 0 }
   },
+  owyhee: {
+    hover: { y: -3, transition: { duration: 0.3 } },
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 }
+  },
+  snl: {
+    hover: { rotate: 2, transition: { duration: 0.3 } },
+    initial: { opacity: 0, rotate: -5 },
+    animate: { opacity: 1, rotate: 0 }
+  },
+  'new-balance': {
+    hover: { scale: 1.03, transition: { duration: 0.3 } },
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 }
+  },
+  ballislife: {
+    hover: { y: -2, transition: { duration: 0.3 } },
+    initial: { opacity: 0, y: -20 },
+    animate: { opacity: 1, y: 0 }
+  },
+  community: {
+    hover: { scale: 1.03, transition: { duration: 0.3 } },
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 }
+  },
   default: {
     hover: { scale: 1.02, transition: { duration: 0.3 } },
     initial: { opacity: 0, y: 20 },
