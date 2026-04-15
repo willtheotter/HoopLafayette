@@ -21,6 +21,8 @@ html {
   scroll-behavior: smooth;
   height: 100%;
   overflow-x: hidden;
+  visibility: visible;
+  opacity: 1;
 }
 
 body {
@@ -32,8 +34,10 @@ body {
     )
     rgb(var(--background-start-rgb));
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: visible;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Fixed position classes - SPECIFIC instead of generic */
@@ -44,7 +48,7 @@ body {
   right: 0;
   bottom: 0;
   will-change: transform;
-  pointer-events: none; /* Prevent background from blocking clicks */
+  pointer-events: none;
 }
 
 .fixed-header {
@@ -59,7 +63,7 @@ body {
 .fixed-mobile-button {
   position: fixed;
   top: 1rem;
-  left: 1rem; /* LEFT position (what you want) */
+  left: 1rem;
   will-change: transform;
   z-index: 60;
 }
@@ -72,11 +76,11 @@ body {
   bottom: 0;
   will-change: transform;
   z-index: 55;
-  pointer-events: none; /* Allow clicks to pass through when closed */
+  pointer-events: none;
 }
 
 .fixed-mobile-menu.visible {
-  pointer-events: all; /* Capture clicks when open */
+  pointer-events: all;
 }
 
 /* Z-index layers */
@@ -89,7 +93,7 @@ body {
 .z-40 { z-index: 40; }
 .z-50 { z-index: 50; }
 
-/* Video Styles (keep for now, can delete later if not used) */
+/* Video Styles */
 video {
   object-fit: cover;
   width: 100%;
@@ -302,7 +306,40 @@ video {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
-/* Glass morphism effects */
+/* ============================================ */
+/* PATTERN STYLES FOR THEME BANNER */
+/* ============================================ */
+
+.flame-pattern {
+  background-image: radial-gradient(circle at center, var(--tw-gradient-stops));
+}
+
+.wave-pattern {
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
+}
+
+.snake-pattern {
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,215,0,0.1) 20px, rgba(255,215,0,0.1) 40px);
+}
+
+.dots-pattern {
+  background-image: radial-gradient(circle at center, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.stripes-pattern {
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 10px, transparent 10px, transparent 20px);
+}
+
+/* Banner Glow Effect */
+.banner-glow {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================ */
+/* GLASS MORPHISM EFFECTS */
+/* ============================================ */
+
 .glass-card {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -592,4 +629,255 @@ a, button {
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================ */
+/* DRAMATIC GRADIENT BACKGROUND ANIMATIONS */
+/* ============================================ */
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes breath {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes noiseShift {
+  0% {
+    transform: translate(0%, 0%);
+  }
+  25% {
+    transform: translate(2%, -1%);
+  }
+  50% {
+    transform: translate(-1%, 2%);
+  }
+  75% {
+    transform: translate(1%, -2%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+/* Gradient Animation Classes */
+.gradient-animated {
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+}
+
+.breath-animation {
+  animation: breath 4s ease-in-out infinite;
+}
+
+.pulse-glow-animation {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+.noise-animation {
+  animation: noiseShift 8s steps(2) infinite;
+}
+
+/* Noise Texture */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  mix-blend-mode: overlay;
+}
+
+/* Radial Gradient Background */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle at center, transparent 0%, black 100%);
+}
+
+/* Additional Animation Classes for Pages */
+.animate-gradient-slow {
+  animation: gradientShift 12s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-breath {
+  animation: breath 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+.animate-noise-shift {
+  animation: noiseShift 8s steps(2) infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s ease-in-out infinite;
+}
+
+.animate-text-shimmer {
+  animation: textShimmer 3s ease-in-out infinite;
+  background-size: 200% auto;
+}
+
+.animate-text-flow {
+  animation: textFlow 4s ease-in-out infinite;
+  background-size: 200% auto;
+}
+
+.animate-title-glow {
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse Slow Animation */
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Text Shimmer Animation */
+@keyframes textShimmer {
+  0%, 100% {
+    opacity: 1;
+    background-position: 0% 50%;
+  }
+  50% {
+    opacity: 0.95;
+    background-position: 100% 50%;
+  }
+}
+
+/* Text Flow Animation */
+@keyframes textFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Title Glow Animation */
+@keyframes titleGlow {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    opacity: 0.95;
+    text-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+/* Utility Classes */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+/* Ensure proper stacking context */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+/* Pointer events */
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+/* Hide content until styles are loaded */
+.no-fouc {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.no-fouc.loaded {
+  opacity: 1;
 }

@@ -22,66 +22,48 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
   const themeStyles = {
     fire: {
       gradient: 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-800',
-      shadow: 'shadow-[0_0_30px_rgba(255,69,0,0.7)]',
       text: 'text-white',
-      border: 'border-orange-400'
     },
     owyhee: {
       gradient: 'bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600',
-      shadow: 'shadow-[0_0_30px_rgba(0,255,255,0.5)]',
       text: 'text-white',
-      border: 'border-cyan-400'
     },
     lakers: {
       gradient: 'bg-gradient-to-r from-purple-700 via-yellow-500 to-purple-800',
-      shadow: 'shadow-[0_0_30px_rgba(253,185,39,0.6)]',
       text: 'text-white',
-      border: 'border-yellow-400'
     },
     venice: {
       gradient: 'bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600',
-      shadow: 'shadow-[0_0_30px_rgba(0,255,255,0.5)]',
       text: 'text-white',
-      border: 'border-cyan-300'
     },
     mamba: {
       gradient: 'bg-gradient-to-r from-zinc-800 via-gray-900 to-black',
-      shadow: 'shadow-[0_0_30px_rgba(255,215,0,0.3)]',
-      text: 'text-yellow-400',
-      border: 'border-yellow-500'
+      text: 'text-gold-400',
     },
     community: {
       gradient: 'bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600',
-      shadow: 'shadow-[0_0_30px_rgba(0,255,0,0.3)]',
       text: 'text-white',
-      border: 'border-green-400'
     },
     snl: {
       gradient: 'bg-gradient-to-r from-purple-800 via-black to-yellow-600',
-      shadow: 'shadow-[0_0_30px_rgba(168,85,247,0.5)]',
       text: 'text-white',
-      border: 'border-yellow-500'
     },
     'new-balance': {
       gradient: 'bg-gradient-to-r from-red-600 via-purple-600 to-blue-600',
-      shadow: 'shadow-[0_0_30px_rgba(220,38,38,0.5)]',
       text: 'text-white',
-      border: 'border-blue-400'
     },
     ballislife: {
       gradient: 'bg-gradient-to-r from-white via-gray-100 to-black',
-      shadow: 'shadow-[0_0_30px_rgba(0,0,0,0.5)]',
       text: 'text-black',
-      border: 'border-yellow-500'
     }
   }
 
   const patternStyles = {
-    flames: 'bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))]',
-    waves: 'bg-[repeating-linear-gradient(45deg,_transparent,_transparent_10px,_rgba(255,255,255,0.1)_10px,_rgba(255,255,255,0.1)_20px)]',
-    snake: 'bg-[repeating-linear-gradient(45deg,_transparent,_transparent_20px,_rgba(255,215,0,0.1)_20px,_rgba(255,215,0,0.1)_40px)]',
-    dots: 'bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[length:20px_20px]',
-    stripes: 'bg-[repeating-linear-gradient(45deg,_rgba(255,255,255,0.1)_0px,_rgba(255,255,255,0.1)_10px,_transparent_10px,_transparent_20px)]',
+    flames: 'flame-pattern',
+    waves: 'wave-pattern',
+    snake: 'snake-pattern',
+    dots: 'dots-pattern',
+    stripes: 'stripes-pattern',
     none: ''
   }
 
@@ -90,7 +72,7 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, type: 'spring' }}
-      className={`relative w-full overflow-hidden ${sizeClasses[size]} ${themeStyles[theme].gradient} ${themeStyles[theme].shadow}`}
+      className={`relative w-full overflow-hidden ${sizeClasses[size]} ${themeStyles[theme].gradient} banner-glow`}
     >
       {/* Pattern Overlay */}
       {pattern !== 'none' && (
@@ -134,7 +116,7 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
       </div>
 
       {/* Decorative Border */}
-      <div className={`absolute bottom-0 left-0 right-0 h-1 ${themeStyles[theme].border} opacity-50`} />
+      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50 ${themeStyles[theme].text}`} />
     </motion.div>
   )
 }

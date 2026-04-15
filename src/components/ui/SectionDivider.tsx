@@ -6,19 +6,20 @@ import { type PageTheme } from '@/types'
 interface SectionDividerProps {
   theme: PageTheme
   variant?: 'wave' | 'angle' | 'curve' | 'straight'
+  className?: string
 }
 
-export const SectionDivider = ({ theme, variant = 'wave' }: SectionDividerProps) => {
-  const themeColors = {
-    fire: '#F97316',
-    owyhee: '#2EC4B6',
-    lakers: '#FDB927',
-    venice: '#0B4F6C',
-    mamba: '#B0B7BC',
-    community: '#10B981',
-    snl: '#A855F7',
-    'new-balance': '#DC2626',
-    ballislife: '#000000'
+export const SectionDivider = ({ theme, variant = 'wave', className = '' }: SectionDividerProps) => {
+  const themeColorClasses = {
+    fire: 'text-orange-500',
+    owyhee: 'text-cyan-400',
+    lakers: 'text-lakers-gold',
+    venice: 'text-cyan-400',
+    mamba: 'text-gold-400',
+    community: 'text-emerald-400',
+    snl: 'text-purple-400',
+    'new-balance': 'text-rose-500',
+    ballislife: 'text-red-500'
   }
 
   const variants = {
@@ -45,14 +46,15 @@ export const SectionDivider = ({ theme, variant = 'wave' }: SectionDividerProps)
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scaleX: 0 }}
-      animate={{ opacity: 1, scaleX: 1 }}
-      transition={{ duration: 0.8 }}
-      className="w-full overflow-hidden"
-      style={{ color: themeColors[theme] }}
-    >
-      {variants[variant]}
-    </motion.div>
+    <div className={`w-full overflow-hidden ${themeColorClasses[theme]} ${className} section-divider`}>
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.8 }}
+        className="origin-left"
+      >
+        {variants[variant]}
+      </motion.div>
+    </div>
   )
 }

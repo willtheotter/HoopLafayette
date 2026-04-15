@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 const slides = [
   {
@@ -185,7 +186,7 @@ export const HeroCarousel = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-extrabold mb-2"
+              className="text-4xl md:text-5xl font-extrabold mb-2 text-white drop-shadow-lg"
             >
               {slides[current].title}
             </motion.h2>
@@ -194,20 +195,23 @@ export const HeroCarousel = () => {
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-lg text-gray-300 mb-4"
+              className="text-lg text-gray-200 mb-6 drop-shadow-md"
             >
               {slides[current].subtitle}
             </motion.p>
 
-            <motion.a
-              href={slides[current].link}
+            <motion.div
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="inline-block px-8 py-3 bg-gradient-to-r from-yellow-400 to-amber-600 hover:from-yellow-500 hover:to-amber-700 transition rounded-lg font-bold text-white mx-auto"
             >
-              {slides[current].cta}
-            </motion.a>
+              <Link
+                href={slides[current].link}
+                className="inline-block px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 transition-all duration-300 rounded-lg font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                {slides[current].cta}
+              </Link>
+            </motion.div>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -215,7 +219,7 @@ export const HeroCarousel = () => {
       {/* 🔥 Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 flex items-center justify-center"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
         aria-label="Previous slide"
       >
         ‹
@@ -223,7 +227,7 @@ export const HeroCarousel = () => {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 flex items-center justify-center"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
         aria-label="Next slide"
       >
         ›
@@ -240,8 +244,8 @@ export const HeroCarousel = () => {
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: current === index && !isHovered ? '100%' : '0%' }}
-              transition={{ duration: 15, ease: 'linear' }} // 15 seconds
-              className="h-full bg-gradient-to-r from-yellow-400 to-amber-600"
+              transition={{ duration: 15, ease: 'linear' }}
+              className="h-full bg-gradient-to-r from-yellow-500 to-amber-600"
             />
           </div>
         ))}

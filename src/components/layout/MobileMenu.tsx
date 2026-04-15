@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { createPortal } from 'react-dom'
 
 const navItems = [
   { name: "WHAT'S HOT", path: '/' },
@@ -17,7 +18,12 @@ const navItems = [
 
 export const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     setIsOpen(false)
@@ -30,6 +36,9 @@ export const MobileMenu = () => {
       document.body.style.overflow = 'unset'
     }
   }, [isOpen])
+
+  // Don't render anything on server to avoid hydration mismatch
+  if (!mounted) return null
 
   const buttonClass = 'lg:hidden fixed top-8 left-4 z-[100] w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 shadow-lg flex items-center justify-center hover:scale-105 transition-all duration-300'
 
@@ -47,13 +56,15 @@ export const MobileMenu = () => {
         </div>
       </button>
 
-      {isOpen && (
-        <div className="lg:hidden fixed inset-0 z-[200]">
+      {isOpen && createPortal(
+        <div className="fixed inset-0 z-[9999]">
+          {/* Backdrop */}
           <div 
             className="absolute inset-0 bg-black/95 backdrop-blur-md"
             onClick={() => setIsOpen(false)}
           ></div>
           
+          {/* Menu Panel */}
           <div className="absolute left-0 top-0 bottom-0 w-80 bg-gradient-to-b from-gray-900 to-black shadow-2xl rounded-r-3xl overflow-hidden">
             <div className="absolute -top-6 left-0 right-0 h-12 bg-gradient-to-b from-yellow-400/20 to-transparent rounded-t-full transform scale-x-110"></div>
             
@@ -73,7 +84,7 @@ export const MobileMenu = () => {
             </div>
 
             <nav className="px-4 py-8 max-h-[calc(100vh-320px)] overflow-y-auto">
-              {navItems.map((item, index) => {
+              {navItems.map((item) => {
                 const isActive = pathname === item.path
                 const linkClass = `block px-4 py-5 mb-2 rounded-xl text-white hover:bg-white/10 transition-all cursor-pointer transform hover:translate-x-2 ${
                   isActive ? 'bg-gradient-to-r from-yellow-500/20 to-transparent border-l-4 border-yellow-400 font-bold' : ''
@@ -85,7 +96,6 @@ export const MobileMenu = () => {
                     href={item.path}
                     className={linkClass}
                     onClick={() => setIsOpen(false)}
-                    style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <span className="text-base font-medium">{item.name}</span>
                   </Link>
@@ -101,7 +111,8 @@ export const MobileMenu = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )

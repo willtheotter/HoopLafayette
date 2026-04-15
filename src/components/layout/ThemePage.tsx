@@ -1,20 +1,19 @@
 'use client'
 
-import { ReactNode } from 'react'
-import { GradientBackground } from '@/components/ui/GradientBackground'
 import { type PageTheme } from '@/types'
+import { GradientBackground } from '@/components/ui/GradientBackground'
 
 interface ThemePageProps {
+  children: React.ReactNode
   theme: PageTheme
-  gradient?: string // Optional custom gradient
-  children: ReactNode
+  gradient?: string
 }
 
-export const ThemePage = ({ theme, gradient, children }: ThemePageProps) => {
+export const ThemePage = ({ children, theme, gradient }: ThemePageProps) => {
   return (
     <div className="relative min-h-screen">
       <GradientBackground theme={theme} gradient={gradient} />
-      <div className="relative z-10 pt-20 lg:pt-24">
+      <div className="relative z-10">
         {children}
       </div>
     </div>
