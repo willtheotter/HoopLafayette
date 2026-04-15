@@ -256,6 +256,26 @@ export const getThemeSequence = (theme: PageTheme) => {
       ease: "easeInOut" as const,
       x: 5
     },
+    owyhee: {
+      duration: 0.4,
+      ease: "easeOut" as const,
+      y: -3
+    },
+    snl: {
+      duration: 0.35,
+      ease: "easeOut" as const,
+      rotate: 2
+    },
+    'new-balance': {
+      duration: 0.3,
+      ease: "easeOut" as const,
+      scale: 1.03
+    },
+    ballislife: {
+      duration: 0.35,
+      ease: "easeOut" as const,
+      y: -2
+    },
     default: {
       duration: 0.3,
       ease: "easeOut" as const,
