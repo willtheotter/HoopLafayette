@@ -69,6 +69,13 @@ export const ThemeAnimations = ({ theme, children, delay = 0 }: ThemeAnimationPr
           hover: { y: -2 },
           transition: { duration: 0.35, delay, ease: "easeOut" as const }
         }
+      case 'community':
+        return {
+          initial: { opacity: 0, scale: 0.95 },
+          animate: { opacity: 1, scale: 1 },
+          hover: { scale: 1.03 },
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
+        }
       default:
         return {
           initial: { opacity: 0, y: 20 },
@@ -235,7 +242,7 @@ export const slideRightVariants = {
 
 // Theme-specific animation sequences
 export const getThemeSequence = (theme: PageTheme) => {
-  const sequences = {
+  const sequences: Record<string, any> = {
     fire: {
       duration: 0.3,
       ease: "anticipate" as const,
@@ -275,6 +282,11 @@ export const getThemeSequence = (theme: PageTheme) => {
       duration: 0.35,
       ease: "easeOut" as const,
       y: -2
+    },
+    community: {
+      duration: 0.3,
+      ease: "easeOut" as const,
+      scale: 1.03
     },
     default: {
       duration: 0.3,
