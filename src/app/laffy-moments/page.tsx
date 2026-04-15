@@ -100,6 +100,27 @@ const eventContent = [
   },
 ]
 
+// Type definitions
+interface InstagramItem {
+  id: string
+  type: 'instagram'
+  username: string
+  url: string
+  caption: string
+  thumbnail: string
+  rank: number
+}
+
+interface YouTubeItem {
+  id: string
+  type: 'youtube'
+  videoId: string
+  title: string
+  rank: number
+}
+
+type EventItem = InstagramItem | YouTubeItem
+
 const InstagramCard = ({ username, url, caption, thumbnail, rank }: { username: string; url: string; caption: string; thumbnail: string; rank?: number }) => {
   const [imgError, setImgError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -113,7 +134,6 @@ const InstagramCard = ({ username, url, caption, thumbnail, rank }: { username: 
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-cyan-500/30 group-hover:border-teal-500/50 transition duration-300">
-        {/* Rank Badge */}
         {rank && (
           <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-white/20">
             <span className="text-white font-black text-lg">{rank}</span>
@@ -172,7 +192,6 @@ const YouTubeCard = ({ videoId, title, rank }: { videoId: string; title: string;
     <div className="group relative transition duration-500 hover:-translate-y-2">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-cyan-500/30 group-hover:border-teal-500/50 transition duration-300">
-        {/* Rank Badge */}
         {rank && (
           <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-white/20">
             <span className="text-white font-black text-lg">{rank}</span>
@@ -209,12 +228,11 @@ export default function LaffyMomentsPage() {
     return null
   }
 
-  // Type-safe filtering with non-null assertions
-  const top10Posts = eventContent.filter(
-    (item): item is typeof item & { rank: number } =>
-      (item.type === 'instagram' && !!item.url && !!item.caption && !!item.thumbnail) ||
-      (item.type === 'youtube' && !!item.videoId && !!item.title)
-  ).sort((a, b) => a.rank - b.rank)
+  // Type-safe filtering with type guards
+  const isInstagramItem = (item: EventItem): item is InstagramItem => item.type === 'instagram'
+  const isYouTubeItem = (item: EventItem): item is YouTubeItem => item.type === 'youtube'
+
+  const top10Posts = eventContent as EventItem[]
 
   return (
     <ThemePage theme="owyhee" gradient={laffyGradient}>
@@ -269,7 +287,7 @@ export default function LaffyMomentsPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {top10Posts.map((item) => (
-                item.type === 'instagram' ? (
+                isInstagramItem(item) ? (
                   <InstagramCard 
                     key={item.id} 
                     username={item.username} 
