@@ -13,13 +13,32 @@ export const SectionDivider = ({ theme, variant = 'wave', className = '' }: Sect
   const themeColorClasses = {
     fire: 'text-orange-500',
     owyhee: 'text-cyan-400',
-    lakers: 'text-lakers-gold',
+    lakers: 'text-amber-400',
     venice: 'text-cyan-400',
-    mamba: 'text-gold-400',
+    mamba: 'text-yellow-400',
     community: 'text-emerald-400',
-    snl: 'text-purple-400',
-    'new-balance': 'text-rose-500',
-    ballislife: 'text-red-500'
+    snl: 'text-yellow-400',
+    'new-balance': 'text-blue-400',
+    ballislife: 'text-red-500',
+    
+    // ========== NEW THEMES ==========
+    gold: 'text-yellow-500',
+    'basketball-brown': 'text-orange-500',
+    green: 'text-green-500',
+  }
+
+  // Theme-specific animation variants
+  const getAnimationConfig = () => {
+    switch(theme) {
+      case 'gold':
+        return { duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] as const }
+      case 'basketball-brown':
+        return { duration: 0.5, type: "spring" as const, bounce: 0.4, stiffness: 200 }
+      case 'green':
+        return { duration: 0.5, ease: "easeOut" as const }
+      default:
+        return { duration: 0.8, ease: "easeOut" as const }
+    }
   }
 
   const variants = {
@@ -45,15 +64,44 @@ export const SectionDivider = ({ theme, variant = 'wave', className = '' }: Sect
     )
   }
 
+  const animationConfig = getAnimationConfig()
+
+  // Special animation for basketball-brown (spring bounce)
+  const isSpringTheme = theme === 'basketball-brown'
+
   return (
     <div className={`w-full overflow-hidden ${themeColorClasses[theme]} ${className} section-divider`}>
       <motion.div
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={animationConfig}
         className="origin-left"
       >
-        {variants[variant]}
+        {/* Add subtle gradient overlay for gold theme */}
+        {theme === 'gold' && (
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-transparent to-yellow-500/20 pointer-events-none" />
+        )}
+        
+        {/* Add bounce effect container for basketball theme */}
+        <motion.div
+          animate={isSpringTheme ? {
+            y: [0, -5, 0],
+            scale: [1, 1.02, 1]
+          } : {}}
+          transition={isSpringTheme ? {
+            duration: 0.3,
+            repeat: Infinity,
+            repeatDelay: 2,
+            ease: "easeOut"
+          } : {}}
+        >
+          {variants[variant]}
+        </motion.div>
+        
+        {/* Add subtle glow for green theme */}
+        {theme === 'green' && (
+          <div className="absolute inset-0 bg-gradient-to-t from-green-500/10 via-transparent to-transparent pointer-events-none" />
+        )}
       </motion.div>
     </div>
   )
