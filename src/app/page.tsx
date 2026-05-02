@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
 import { ThemePage } from '@/components/layout/ThemePage'
 import { SideNavigation } from '@/components/layout/SideNavigation'
@@ -18,7 +18,6 @@ const eventContent = [
     username: 'ballislife.hoops',
     url: 'https://www.instagram.com/reel/DWzyFmDj4Hu/',
     caption: 'This is THE GREATEST SERIES to ever hit Ballislife… and maybe the internet. We\'ve NEVER seen a city bring out the energy like Toronto did. 🔥🔥🔥',
-    thumbnail: '/images/thumbnails/ballislife-toronto.jpg',
   },
   {
     id: 'themeccaproam-champions',
@@ -26,7 +25,6 @@ const eventContent = [
     username: 'themeccaproam',
     url: 'https://www.instagram.com/reel/DXDHwaEOsQj/',
     caption: 'OTD are your Battle Los Angeles Champions. $100K secured. 🔥',
-    thumbnail: '/images/thumbnails/themeccaproam-champions.jpg',
   },
   {
     id: 'themeccaproam-otd',
@@ -34,7 +32,6 @@ const eventContent = [
     username: 'themeccaproam',
     url: 'https://www.instagram.com/reel/DXCkvsUuYDE/',
     caption: 'OTD vs Blazers/Problems. Old school vs New school. $100K on the line.',
-    thumbnail: '/images/thumbnails/themeccaproam-otd.jpg',
   },
   {
     id: 'regithq-lebron',
@@ -42,7 +39,6 @@ const eventContent = [
     username: 'regithq',
     url: 'https://www.instagram.com/reel/CthalmutaYH/',
     caption: 'LeBron with moves in Drew league game 🧏‍♂️🔥 #reels #lebronjames #dancing #drewleague',
-    thumbnail: '/images/thumbnails/regithq-lebron.jpg',
   },
   {
     id: 'tncleague-kam',
@@ -50,7 +46,6 @@ const eventContent = [
     username: 'tncleague',
     url: 'https://www.instagram.com/reel/DVRIjvBDhbK/',
     caption: 'Do y\'all want to see @kamsosmoove_ and @mjm.hoodieqel play together more often? 👀',
-    thumbnail: '/images/thumbnails/tncleague-kam.jpg',
   },
   {
     id: 'queenvision-hezi',
@@ -58,7 +53,6 @@ const eventContent = [
     username: 'queenvision__',
     url: 'https://www.instagram.com/reel/DW9zuIEEhLE/',
     caption: 'Hezi vs K5 1v1 fade of the night got real!! 🏀💰 @ready_to_hoop',
-    thumbnail: '/images/thumbnails/queenvision-hezi.jpg',
   },
   // YouTube Videos
   {
@@ -123,64 +117,81 @@ const eventContent = [
   },
 ]
 
-const InstagramCard = ({ username, url, caption, thumbnail }: { username: string; url: string; caption: string; thumbnail: string }) => {
-  const [imgError, setImgError] = useState(false)
+// NEW: Working Instagram Embed Component
+const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [embedLoaded, setEmbedLoaded] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Load Instagram embed script
+    const loadInstagramScript = () => {
+      if (document.querySelector('script[src="https://www.instagram.com/embed.js"]')) {
+        return
+      }
+      const script = document.createElement('script')
+      script.src = 'https://www.instagram.com/embed.js'
+      script.async = true
+      script.defer = true
+      document.body.appendChild(script)
+    }
+
+    loadInstagramScript()
+
+    // Process embeds after script loads
+    const processEmbeds = () => {
+      if ((window as any).instgrm) {
+        (window as any).instgrm.Embeds.process()
+        setEmbedLoaded(true)
+        setTimeout(() => setIsLoading(false), 500)
+      } else {
+        setTimeout(processEmbeds, 500)
+      }
+    }
+
+    processEmbeds()
+  }, [url])
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative transition duration-500 hover:-translate-y-2 cursor-pointer block"
-    >
+    <div className="group relative transition duration-500 hover:-translate-y-2">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300">
-        <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-red-900/50 to-orange-900/50">
-          {!imgError ? (
-            <img
-              src={thumbnail}
-              alt={caption}
-              className={`w-full h-full object-cover transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-              onLoad={() => setIsLoading(false)}
-              onError={() => {
-                setImgError(true)
-                setIsLoading(false)
-              }}
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-red-500 via-orange-500 to-yellow-500 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
-                </svg>
-              </div>
-              <p className="text-xs text-white/60 text-center px-2">Instagram Post</p>
-            </div>
-          )}
-          {isLoading && !imgError && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
-            </div>
-          )}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
-              </svg>
-            </div>
-          </div>
-        </div>
         <div className="p-4">
-          <p className="text-sm font-bold text-red-400 mb-1">@{username}</p>
-          <p className="text-sm text-white/80 line-clamp-2">{caption}</p>
-          <div className="mt-3 text-orange-400 text-xs group-hover:text-yellow-400 transition-colors flex items-center gap-1">
-            <span>View on Instagram</span>
+          <p className="text-sm font-bold text-red-400 mb-2">@{username}</p>
+          
+          <div ref={containerRef} className="instagram-embed-wrapper min-h-[400px]">
+            {isLoading && (
+              <div className="flex items-center justify-center py-12">
+                <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink={url}
+              data-instgrm-version="14"
+              style={{
+                background: 'transparent',
+                maxWidth: '540px',
+                minWidth: '326px',
+                width: '100%',
+                margin: '0 auto',
+                display: isLoading ? 'none' : 'block'
+              }}
+            >
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                View on Instagram
+              </a>
+            </blockquote>
+          </div>
+
+          <p className="text-sm text-white/80 mt-3 line-clamp-2">{caption}</p>
+          <div className="mt-2 text-orange-400 text-xs group-hover:text-yellow-400 transition-colors flex items-center gap-1">
+            <span>View original post</span>
             <span>→</span>
           </div>
         </div>
       </div>
-    </a>
+    </div>
   )
 }
 
@@ -220,10 +231,10 @@ export default function HomePage() {
     return null
   }
 
-  // Type-safe filtering with non-null assertions
+  // Type-safe filtering
   const instagramPosts = eventContent.filter(
-    (item): item is typeof item & { url: string; caption: string; thumbnail: string } =>
-      item.type === 'instagram' && !!item.url && !!item.caption && !!item.thumbnail
+    (item): item is typeof item & { url: string; caption: string; username: string } =>
+      item.type === 'instagram' && !!item.url && !!item.caption && !!item.username
   )
 
   const youtubeVideos = eventContent.filter(
@@ -278,12 +289,11 @@ export default function HomePage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {instagramPosts.map((item) => (
-                <InstagramCard 
+                <InstagramEmbed 
                   key={item.id} 
                   username={item.username} 
                   url={item.url} 
                   caption={item.caption} 
-                  thumbnail={item.thumbnail} 
                 />
               ))}
             </div>
