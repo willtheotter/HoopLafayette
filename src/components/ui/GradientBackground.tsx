@@ -25,7 +25,15 @@ const gradients: Record<PageTheme, string> = {
   
   'new-balance': 'from-blue-700 via-blue-600 to-rose-700',
   
-  ballislife: 'from-slate-100 via-red-600 via-neutral-800 to-black'
+  ballislife: 'from-slate-100 via-red-600 via-neutral-800 to-black',
+  
+  // ========== NEW THEMES ==========
+  
+  gold: 'from-black via-amber-900 via-yellow-600 to-amber-300',
+  
+  'basketball-brown': 'from-black via-amber-800 via-orange-800 to-stone-700',
+  
+  green: 'from-black via-emerald-900 via-green-700 to-lime-500'
 }
 
 export const GradientBackground = ({

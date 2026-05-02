@@ -76,6 +76,39 @@ export const ThemeAnimations = ({ theme, children, delay = 0 }: ThemeAnimationPr
           hover: { scale: 1.03 },
           transition: { duration: 0.3, delay, ease: "easeOut" as const }
         }
+      
+      // ========== NEW THEMES ==========
+      
+      case 'gold':
+        return {
+          initial: { opacity: 0, y: 20, rotate: -2 },
+          animate: { opacity: 1, y: 0, rotate: 0 },
+          hover: { scale: 1.03, rotate: -1 },
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
+        }
+      
+      case 'basketball-brown':
+        return {
+          initial: { opacity: 0, scale: 0.98, y: 10 },
+          animate: { opacity: 1, scale: 1, y: 0 },
+          hover: { y: -4, scale: 1.02 },
+          transition: { 
+            duration: 0.25, 
+            delay, 
+            ease: "easeOut" as const,
+            type: "spring" as const,
+            stiffness: 300 
+          }
+        }
+      
+      case 'green':
+        return {
+          initial: { opacity: 0, x: -10 },
+          animate: { opacity: 1, x: 0 },
+          hover: { scale: 1.02, x: 3 },
+          transition: { duration: 0.3, delay, ease: "easeOut" as const }
+        }
+      
       default:
         return {
           initial: { opacity: 0, y: 20 },
@@ -288,6 +321,29 @@ export const getThemeSequence = (theme: PageTheme) => {
       ease: "easeOut" as const,
       scale: 1.03
     },
+    
+    // NEW THEME SEQUENCES
+    gold: {
+      duration: 0.3,
+      ease: "easeOut" as const,
+      scale: 1.03,
+      rotate: -1
+    },
+    'basketball-brown': {
+      duration: 0.25,
+      ease: "easeOut" as const,
+      y: -4,
+      scale: 1.02,
+      type: "spring" as const,
+      stiffness: 300
+    },
+    green: {
+      duration: 0.3,
+      ease: "easeOut" as const,
+      scale: 1.02,
+      x: 3
+    },
+    
     default: {
       duration: 0.3,
       ease: "easeOut" as const,

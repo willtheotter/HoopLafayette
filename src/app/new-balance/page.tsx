@@ -18,7 +18,6 @@ const eventContent = [
     username: 'newbalancebasketball',
     url: 'https://www.instagram.com/reel/DU3mzq2EfZN/',
     caption: '2026 NBA All-Star.',
-    thumbnail: '/images/thumbnails/nb-allstar.jpg',
   },
   {
     id: 'nba-darius',
@@ -26,7 +25,6 @@ const eventContent = [
     username: 'NBA',
     url: 'https://www.instagram.com/reel/DUyhuneEZOU/',
     caption: 'Darius Garland pulled up to the @newbalancebasketball courts in LA and brought the energy to the dunk showcase!',
-    thumbnail: '/images/thumbnails/nba-darius.jpg',
   },
   {
     id: 'nb-instant-film',
@@ -34,7 +32,6 @@ const eventContent = [
     username: 'newbalancebasketball',
     url: 'https://www.instagram.com/p/DU1sRBNDV5m/',
     caption: '2026 NBA All-Star. Shot on instant film.',
-    thumbnail: '/images/thumbnails/instant-film.jpg',
   },
   {
     id: 'nb-lafayette-1',
@@ -42,7 +39,6 @@ const eventContent = [
     username: 'newbalancebasketball',
     url: 'https://www.instagram.com/p/DUynrxREhAw/',
     caption: '2026 NBA All-Star. 📍Lafayette Park',
-    thumbnail: '/images/thumbnails/lafayette-1.jpg',
   },
   {
     id: 'nb-lafayette-2',
@@ -50,7 +46,6 @@ const eventContent = [
     username: 'newbalancebasketball',
     url: 'https://www.instagram.com/p/DUwV-lMErYT/',
     caption: '2026 NBA All-Star 📍Lafayette Park',
-    thumbnail: '/images/thumbnails/lafayette-2.jpg',
   },
   {
     id: 'nb-welcome',
@@ -58,7 +53,6 @@ const eventContent = [
     username: 'newbalancebasketball',
     url: 'https://www.instagram.com/p/DUirq8ljmjZ/',
     caption: 'All-Star Weekend. Lafayette Park. All are welcome.',
-    thumbnail: '/images/thumbnails/welcome.jpg',
   },
   {
     id: 'veniceball-day1',
@@ -66,7 +60,6 @@ const eventContent = [
     username: 'veniceball',
     url: 'https://www.instagram.com/p/DUyyAcHE5K1/',
     caption: 'New Balance All Star Experience DAY 1 ✅',
-    thumbnail: '/images/thumbnails/veniceball-day1.jpg',
   },
   {
     id: 'tcurrie',
@@ -74,7 +67,6 @@ const eventContent = [
     username: 't.currie',
     url: 'https://www.instagram.com/reel/DU6GCflDyDL/',
     caption: 'Going crazy at New Balance All Star Event ⭐️🏀',
-    thumbnail: '/images/thumbnails/tcurrie.jpg',
   },
   {
     id: 'ruthless',
@@ -82,7 +74,6 @@ const eventContent = [
     username: 'ruthlesscreationz',
     url: 'https://www.instagram.com/reel/DU8ZcOEDiwx/',
     caption: 'Allstar weekend @newbalance @veniceball 2026',
-    thumbnail: '/images/thumbnails/ruthless.jpg',
   },
   {
     id: 'dscarss-geek',
@@ -90,7 +81,6 @@ const eventContent = [
     username: 'dscarss',
     url: 'https://www.instagram.com/reel/DU4IvKLkUqb/',
     caption: 'GEEEK TALK 🖖🏼 @newbalancebasketball ❤️',
-    thumbnail: '/images/thumbnails/dscarss-geek.jpg',
   },
   {
     id: 'dscarss-aliens',
@@ -98,7 +88,6 @@ const eventContent = [
     username: 'dscarss',
     url: 'https://www.instagram.com/reel/DU52WhPkTxh/',
     caption: 'Aliens Took Over @newbalancebasketball 🖖🏼',
-    thumbnail: '/images/thumbnails/dscarss-aliens.jpg',
   },
   {
     id: 'baller-bree',
@@ -106,7 +95,6 @@ const eventContent = [
     username: 'baller_bree',
     url: 'https://www.instagram.com/reel/DU_mhnmkpUc/',
     caption: 'W’s IN THE CHAT WITH THA GANG',
-    thumbnail: '/images/thumbnails/baller-bree.jpg',
   },
   {
     id: 'kgv-sports',
@@ -114,7 +102,6 @@ const eventContent = [
     username: 'kgv.sports',
     url: 'https://www.instagram.com/reel/DU2HAGaEc02/',
     caption: 'Just having fun @uncleskoob 🕷️ #kgv 🚀',
-    thumbnail: '/images/thumbnails/kgv-sports.jpg',
   },
   {
     id: 'juice1hunnit',
@@ -122,7 +109,6 @@ const eventContent = [
     username: 'juice1hunnit',
     url: 'https://www.instagram.com/reel/DU4GnW9koYk/',
     caption: '@newbalance @veniceball',
-    thumbnail: '/images/thumbnails/juice1hunnit.jpg',
   },
   {
     id: 'only-winns',
@@ -130,7 +116,6 @@ const eventContent = [
     username: 'only.winns',
     url: 'https://www.instagram.com/reel/DVNJ2QsERN7/',
     caption: 'Getting buckets at the New Balance All Star Weekend Experience',
-    thumbnail: '/images/thumbnails/only-winns.jpg',
   },
   {
     id: 'larry-sanders',
@@ -138,7 +123,6 @@ const eventContent = [
     username: 'thereal_larrysanders',
     url: 'https://www.instagram.com/reel/DU4Zl-tkQFU/',
     caption: 'Sometimes you just gotta shake the haters off and shoot your shot',
-    thumbnail: '/images/thumbnails/larry-sanders.jpg',
   },
   {
     id: 'drew-koda-kids',
@@ -146,7 +130,6 @@ const eventContent = [
     username: 'drew.koda',
     url: 'https://www.instagram.com/reel/DUwtyWDCU42/',
     caption: 'We had the kids jumpin at the @veniceball x @newbalancebasketball event 🔥',
-    thumbnail: '/images/thumbnails/drew-koda-kids.jpg',
   },
   {
     id: 'kymani-d2',
@@ -154,7 +137,6 @@ const eventContent = [
     username: 'kymani_d2',
     url: 'https://www.instagram.com/reel/DU9YWVgjVfg/',
     caption: 'Idk how but wait for it😂👀',
-    thumbnail: '/images/thumbnails/kymani-d2.jpg',
   },
   {
     id: 'coloradogold',
@@ -162,7 +144,6 @@ const eventContent = [
     username: 'coloradogold__',
     url: 'https://www.instagram.com/reel/DU6c2Cikm4N/',
     caption: 'Buckets were handed out at the @newbalancebasketball activation',
-    thumbnail: '/images/thumbnails/coloradogold.jpg',
   },
   {
     id: 'zermillion',
@@ -170,7 +151,6 @@ const eventContent = [
     username: 'zermillion',
     url: 'https://www.instagram.com/reel/DUsA0VVkfUH/',
     caption: 'NB🏁 ALLSTAR WEEKEND 🏁',
-    thumbnail: '/images/thumbnails/zermillion.jpg',
   },
   {
     id: 'shotbydyl',
@@ -178,7 +158,6 @@ const eventContent = [
     username: '_shotbydyl',
     url: 'https://www.instagram.com/p/DU4GWYwkiC5/',
     caption: 'pt 2 from all ⭐️ week',
-    thumbnail: '/images/thumbnails/shotbydyl.jpg',
   },
   {
     id: 'davyds',
@@ -186,7 +165,6 @@ const eventContent = [
     username: 'd.avyds',
     url: 'https://www.instagram.com/p/DVE4m5jkhLg/',
     caption: 'ASW LA 26’',
-    thumbnail: '/images/thumbnails/davyds.jpg',
   },
   {
     id: 'reallyrarejaay',
@@ -194,7 +172,6 @@ const eventContent = [
     username: 'reallyrarejaay',
     url: 'https://www.instagram.com/p/DUzOUR_CTt5/',
     caption: 'Allstar Weekend 2026 ✨',
-    thumbnail: '/images/thumbnails/reallyrarejaay.jpg',
   },
   {
     id: 'drew-koda-post',
@@ -202,7 +179,6 @@ const eventContent = [
     username: 'drew.koda',
     url: 'https://www.instagram.com/p/DU_qbcbEs0n/',
     caption: 'Koda Street Vol. 2 📼',
-    thumbnail: '/images/thumbnails/drew-koda-post.jpg',
   },
   {
     id: 'kotc-youtube',
@@ -224,73 +200,122 @@ const eventContent = [
   },
 ]
 
-const InstagramCard = ({ username, url, caption, thumbnail }: { username: string; url: string; caption: string; thumbnail: string }) => {
-  const [imgError, setImgError] = useState(false)
+// Instagram Component - Desktop shows embed, Mobile shows button only
+const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
+  const [isMobile, setIsMobile] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : ''
+      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      setIsMobile(mobile)
+    }
+    checkMobile()
+  }, [])
 
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative transition duration-500 hover:-translate-y-2 cursor-pointer block"
-    >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300">
-        <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-red-900/50 to-blue-900/50">
-          {!imgError ? (
-            <img
-              src={thumbnail}
-              alt={caption}
-              className={`w-full h-full object-cover transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-              onLoad={() => setIsLoading(false)}
-              onError={() => {
-                setImgError(true)
-                setIsLoading(false)
-              }}
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-red-500 to-blue-500 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
-                </svg>
-              </div>
-              <p className="text-xs text-white/60 text-center px-2">Instagram Post</p>
-            </div>
-          )}
-          {isLoading && !imgError && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
-            </div>
-          )}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+  // Extract the post/reel ID from Instagram URL
+  const getEmbedUrl = (instagramUrl: string) => {
+    const reelMatch = instagramUrl.match(/\/reel\/([A-Za-z0-9_-]+)/)
+    const postMatch = instagramUrl.match(/\/p\/([A-Za-z0-9_-]+)/)
+    const tvMatch = instagramUrl.match(/\/tv\/([A-Za-z0-9_-]+)/)
+    const id = reelMatch?.[1] || postMatch?.[1] || tvMatch?.[1]
+    
+    if (id) {
+      return `https://www.instagram.com/p/${id}/embed/`
+    }
+    return null
+  }
+
+  const embedUrl = getEmbedUrl(url)
+
+  // MOBILE VERSION - Button only (no embed, perfect performance!)
+  if (isMobile) {
+    return (
+      <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+        <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full flex flex-col">
+          <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
+            <p className="text-sm font-bold text-red-400 mb-3">@{username}</p>
+            
+            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-red-500 to-blue-500 flex items-center justify-center mb-4">
+              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
               </svg>
             </div>
-          </div>
-        </div>
-        <div className="p-4">
-          <p className="text-sm font-bold text-red-400 mb-1">@{username}</p>
-          <p className="text-sm text-white/80 line-clamp-2">{caption}</p>
-          <div className="mt-3 text-blue-400 text-xs group-hover:text-red-400 transition-colors flex items-center gap-1">
-            <span>View on Instagram</span>
-            <span>→</span>
+
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl hover:from-red-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 mb-3"
+            >
+              <span className="text-white font-bold">View on Instagram</span>
+              <span className="text-white">→</span>
+            </a>
+
+            <p className="text-sm text-white/80 line-clamp-2">{caption}</p>
+            <p className="text-xs text-white/40 mt-3">Opens in Instagram app</p>
           </div>
         </div>
       </div>
-    </a>
+    )
+  }
+
+  // DESKTOP VERSION - Full embed
+  return (
+    <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full flex flex-col">
+        <div className="p-4 flex-1 flex flex-col">
+          <p className="text-sm font-bold text-red-400 mb-2">@{username}</p>
+          
+          <div className="instagram-embed-wrapper min-h-[450px] relative">
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+            {embedUrl ? (
+              <iframe
+                src={embedUrl}
+                title={`Instagram post by ${username}`}
+                className="w-full h-full min-h-[450px]"
+                frameBorder="0"
+                scrolling="no"
+                allow="encrypted-media; picture-in-picture; fullscreen"
+                onLoad={() => setIsLoading(false)}
+              />
+            ) : (
+              <div className="flex items-center justify-center py-12 text-white/60">
+                <p>Unable to load post</p>
+              </div>
+            )}
+          </div>
+
+          <p className="text-sm text-white/80 mt-3 line-clamp-2 flex-shrink-0">{caption}</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 text-blue-400 text-xs group-hover:text-red-400 transition-colors flex items-center gap-1 flex-shrink-0"
+          >
+            <span>View on Instagram</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
   )
 }
 
 const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
   return (
-    <div className="group relative transition duration-500 hover:-translate-y-2">
+    <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300">
-        <div className="aspect-video w-full">
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full flex flex-col">
+        <div className="aspect-video w-full flex-shrink-0">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
             title={title}
@@ -300,7 +325,7 @@ const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => 
             className="w-full h-full"
           />
         </div>
-        <div className="p-4 text-center">
+        <div className="p-4 text-center flex-1 flex items-center justify-center">
           <h3 className="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2">
             {title}
           </h3>
@@ -321,10 +346,10 @@ export default function EventActivationPage() {
     return null
   }
 
-  // FIXED: Type-safe filtering with non-null assertions
+  // Type-safe filtering
   const instagramPosts = eventContent.filter(
-    (item): item is typeof item & { url: string; caption: string; thumbnail: string } =>
-      item.type === 'instagram' && !!item.url && !!item.caption && !!item.thumbnail
+    (item): item is typeof item & { url: string; caption: string; username: string } =>
+      item.type === 'instagram' && !!item.url && !!item.caption && !!item.username
   )
 
   const youtubeVideos = eventContent.filter(
@@ -355,8 +380,7 @@ export default function EventActivationPage() {
               </span>
             </h1>
           
-            
-            <div className="flex justify-center mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
               <Link href="https://www.newbalance.com/basketball/" target="_blank" rel="noopener noreferrer">
                 <div className="flex items-center gap-3 px-8 py-3 bg-white/10 rounded-full border border-white/20 hover:bg-white/20 transition duration-300 backdrop-blur-sm">
                   <span className="text-xl">🛒</span>
@@ -378,14 +402,13 @@ export default function EventActivationPage() {
               <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-red-500/50 to-transparent" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
               {instagramPosts.map((item) => (
-                <InstagramCard 
+                <InstagramEmbed 
                   key={item.id} 
                   username={item.username} 
                   url={item.url} 
                   caption={item.caption} 
-                  thumbnail={item.thumbnail} 
                 />
               ))}
             </div>
@@ -401,7 +424,7 @@ export default function EventActivationPage() {
               <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-blue-500/50 to-transparent" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
               {youtubeVideos.map((item) => (
                 <YouTubeCard 
                   key={item.id} 
@@ -414,6 +437,18 @@ export default function EventActivationPage() {
 
           <footer className="w-full py-12 mt-16 border-t border-red-500/30">
             <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-4 mb-6">
+                <Link href="/" className="text-white/50 hover:text-red-400 text-sm transition">Home</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/youtube-classics" className="text-white/50 hover:text-yellow-400 text-sm transition">YouTube Classics</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/nba-highlights" className="text-white/50 hover:text-orange-400 text-sm transition">NBA Highlights</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/newsletter" className="text-white/50 hover:text-green-400 text-sm transition">Newsletter</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/themes" className="text-white/50 hover:text-white text-sm transition">All Themes</Link>
+              </div>
+              
               <Link href="https://www.newbalance.com/basketball/" target="_blank" rel="noopener noreferrer">
                 <div className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-red-600/30 to-blue-600/30 backdrop-blur-sm border border-red-500/40 hover:border-blue-500/60 transition duration-300 group cursor-pointer hover:scale-105 transform">
                   <span className="text-3xl">🏀</span>
@@ -421,8 +456,25 @@ export default function EventActivationPage() {
                   <span className="text-3xl">👟</span>
                 </div>
               </Link>
+              <div className="flex flex-wrap justify-center gap-4 mt-6">
+                <Link href="https://www.instagram.com/newbalancebasketball" target="_blank" rel="noopener noreferrer">
+                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-500/40 transition duration-300">
+                    <span className="text-lg">📸</span>
+                    <span className="text-white/60 text-sm">@newbalancebasketball</span>
+                  </div>
+                </Link>
+                <Link href="https://www.newbalance.com/basketball/" target="_blank" rel="noopener noreferrer">
+                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-500/40 transition duration-300">
+                    <span className="text-lg">🛒</span>
+                    <span className="text-white/60 text-sm">Official Store</span>
+                  </div>
+                </Link>
+              </div>
               <p className="text-white/30 text-sm mt-6">
                 Capturing the energy of the 2026 NBA All-Star Weekend in Los Angeles.
+              </p>
+              <p className="text-white/20 text-xs mt-4">
+                © {new Date().getFullYear()} Lafayette Hoops • All Rights Reserved
               </p>
             </div>
           </footer>

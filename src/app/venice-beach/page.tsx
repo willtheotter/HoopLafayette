@@ -290,7 +290,7 @@ export default function VeniceBeachPage() {
               </span>
             </h1>
           
-            <div className="flex justify-center mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
               <Link href="https://shop.veniceball.com" target="_blank" rel="noopener noreferrer">
                 <div className="flex items-center gap-3 px-8 py-3 bg-white/10 rounded-full border border-white/20 hover:bg-white/20 transition duration-300 backdrop-blur-sm">
                   <span className="text-xl">🛒</span>
@@ -348,6 +348,18 @@ export default function VeniceBeachPage() {
 
           <footer className="w-full py-12 mt-16 border-t border-cyan-500/30">
             <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-4 mb-6">
+                <Link href="/" className="text-white/50 hover:text-cyan-400 text-sm transition">Home</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/youtube-classics" className="text-white/50 hover:text-yellow-400 text-sm transition">YouTube Classics</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/nba-highlights" className="text-white/50 hover:text-orange-400 text-sm transition">NBA Highlights</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/newsletter" className="text-white/50 hover:text-green-400 text-sm transition">Newsletter</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/themes" className="text-white/50 hover:text-white text-sm transition">All Themes</Link>
+              </div>
+              
               <Link href="https://shop.veniceball.com" target="_blank" rel="noopener noreferrer">
                 <div className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-cyan-600/30 to-blue-600/30 backdrop-blur-sm border border-cyan-500/40 hover:border-blue-500/60 transition duration-300 group cursor-pointer hover:scale-105 transform">
                   <span className="text-3xl">🏀</span>
@@ -355,8 +367,27 @@ export default function VeniceBeachPage() {
                   <span className="text-3xl">🌊</span>
                 </div>
               </Link>
+              
+              <div className="flex flex-wrap justify-center gap-4 mt-6">
+                <Link href="https://www.instagram.com/veniceball" target="_blank" rel="noopener noreferrer">
+                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyan-500/40 transition duration-300">
+                    <span className="text-lg">📸</span>
+                    <span className="text-white/60 text-sm">@veniceball</span>
+                  </div>
+                </Link>
+                <Link href="https://shop.veniceball.com" target="_blank" rel="noopener noreferrer">
+                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyan-500/40 transition duration-300">
+                    <span className="text-lg">🛒</span>
+                    <span className="text-white/60 text-sm">Official Shop</span>
+                  </div>
+                </Link>
+              </div>
+              
               <p className="text-white/30 text-sm mt-6">
                 HOOPERS PARADISE • The Mecca of Outdoor Basketball • Culture • Community • Legacy
+              </p>
+              <p className="text-white/20 text-xs mt-4">
+                © {new Date().getFullYear()} Lafayette Hoops • All Rights Reserved
               </p>
             </div>
           </footer>

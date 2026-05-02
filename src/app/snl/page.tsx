@@ -5,6 +5,7 @@ import { ThemePage } from '@/components/layout/ThemePage'
 import { SideNavigation } from '@/components/layout/SideNavigation'
 import { HeroCarousel } from '@/components/ui/HeroCarousel'
 import { SectionDivider } from '@/components/ui/SectionDivider'
+import Link from 'next/link'
 
 export default function SNLPage() {
   const snlVideos = [
@@ -282,6 +283,43 @@ export default function SNLPage() {
               <span className="text-2xl group-hover:animate-bounce delay-100">🏀</span>
             </div>
           </div>
+
+          <footer className="w-full py-12 mt-16 border-t border-purple-500/30">
+            <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-4 mb-6">
+                <Link href="/" className="text-white/50 hover:text-yellow-400 text-sm transition">Home</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/youtube-classics" className="text-white/50 hover:text-yellow-400 text-sm transition">YouTube Classics</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/nba-highlights" className="text-white/50 hover:text-orange-400 text-sm transition">NBA Highlights</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/newsletter" className="text-white/50 hover:text-green-400 text-sm transition">Newsletter</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/themes" className="text-white/50 hover:text-white text-sm transition">All Themes</Link>
+              </div>
+              
+              <div className="flex flex-wrap justify-center gap-4 mt-6">
+                <Link href="https://www.instagram.com/lafayettehoop" target="_blank" rel="noopener noreferrer">
+                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/40 transition duration-300">
+                    <span className="text-lg">📸</span>
+                    <span className="text-white/60 text-sm">@lafayettehoop</span>
+                  </div>
+                </Link>
+                <Link href="https://www.youtube.com/@lafayettehoop" target="_blank" rel="noopener noreferrer">
+                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-yellow-400/40 transition duration-300">
+                    <span className="text-lg">▶️</span>
+                    <span className="text-white/60 text-sm">YouTube Channel</span>
+                  </div>
+                </Link>
+              </div>
+              <p className="text-white/30 text-sm mt-6">
+                Summer Night Lights • Hoopin' & Hollerin' • Lafayette Recreation Center • Est. 2018
+              </p>
+              <p className="text-white/20 text-xs mt-4">
+                © {new Date().getFullYear()} Lafayette Hoops • All Rights Reserved
+              </p>
+            </div>
+          </footer>
         </div>
       </main>
     </ThemePage>

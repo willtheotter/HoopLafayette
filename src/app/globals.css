@@ -116,7 +116,7 @@ video {
   z-index: 10;
 }
 
-/* Custom scrollbar per theme */
+/* Custom scrollbar per theme - UPDATED with new themes */
 .scrollbar-fire::-webkit-scrollbar {
   width: 10px;
 }
@@ -226,7 +226,66 @@ video {
   background: linear-gradient(to bottom, #34D399, #059669);
 }
 
-/* Firefox scrollbar */
+/* ========== NEW THEMES SCROLLBARS ========== */
+
+/* Gold Theme - YouTube Classics */
+.scrollbar-gold::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar-gold::-webkit-scrollbar-track {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.scrollbar-gold::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #D97706, #F59E0B);
+  border-radius: 5px;
+  border: 2px solid rgba(245, 158, 11, 0.3);
+}
+
+.scrollbar-gold::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #F59E0B, #FBBF24);
+}
+
+/* Basketball Brown Theme - NBA Highlights */
+.scrollbar-basketball-brown::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar-basketball-brown::-webkit-scrollbar-track {
+  background: rgba(146, 64, 14, 0.2);
+}
+
+.scrollbar-basketball-brown::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #9A3412, #EA580C);
+  border-radius: 5px;
+  border: 2px solid rgba(234, 88, 12, 0.3);
+}
+
+.scrollbar-basketball-brown::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #EA580C, #F97316);
+}
+
+/* Green Theme - Newsletter */
+.scrollbar-green::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar-green::-webkit-scrollbar-track {
+  background: rgba(5, 150, 105, 0.2);
+}
+
+.scrollbar-green::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #047857, #10B981);
+  border-radius: 5px;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.scrollbar-green::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #10B981, #34D399);
+}
+
+/* Firefox scrollbar - UPDATED with new themes */
 .scrollbar-fire {
   scrollbar-width: thin;
   scrollbar-color: #F97316 rgba(0, 0, 0, 0.3);
@@ -245,6 +304,21 @@ video {
 .scrollbar-lakers {
   scrollbar-width: thin;
   scrollbar-color: #FDB927 #552583;
+}
+
+.scrollbar-gold {
+  scrollbar-width: thin;
+  scrollbar-color: #F59E0B rgba(245, 158, 11, 0.2);
+}
+
+.scrollbar-basketball-brown {
+  scrollbar-width: thin;
+  scrollbar-color: #EA580C rgba(146, 64, 14, 0.2);
+}
+
+.scrollbar-green {
+  scrollbar-width: thin;
+  scrollbar-color: #10B981 rgba(5, 150, 105, 0.2);
 }
 
 /* Animated background patterns */
@@ -331,6 +405,22 @@ video {
   background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 10px, transparent 10px, transparent 20px);
 }
 
+/* NEW PATTERNS for new themes */
+.retro-grid-pattern {
+  background-image: 
+    repeating-linear-gradient(0deg, rgba(245, 158, 11, 0.1) 0px, rgba(245, 158, 11, 0.1) 2px, transparent 2px, transparent 40px),
+    repeating-linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0px, rgba(245, 158, 11, 0.1) 2px, transparent 2px, transparent 40px);
+}
+
+.basketball-pattern {
+  background-image: radial-gradient(circle at 20% 30%, rgba(234, 88, 12, 0.1) 2px, transparent 2px);
+  background-size: 30px 30px;
+}
+
+.news-pattern {
+  background-image: repeating-linear-gradient(0deg, rgba(16, 185, 129, 0.05) 0px, rgba(16, 185, 129, 0.05) 1px, transparent 1px, transparent 20px);
+}
+
 /* Banner Glow Effect */
 .banner-glow {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
@@ -363,7 +453,7 @@ video {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
-/* Text gradients */
+/* Text gradients - UPDATED with new themes */
 .text-gradient-fire {
   background: linear-gradient(135deg, #F97316, #DC2626);
   -webkit-background-clip: text;
@@ -383,6 +473,40 @@ video {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D97706, #F59E0B, #FBBF24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-basketball-brown {
+  background: linear-gradient(135deg, #9A3412, #EA580C, #F97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-green {
+  background: linear-gradient(135deg, #047857, #10B981, #34D399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shadow glows for new themes */
+.shadow-glow-gold {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+.shadow-glow-brown {
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.3);
+}
+
+.shadow-glow-green {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
 /* Loading animations */
@@ -503,7 +627,7 @@ a,
   aspect-ratio: 9 / 16;
 }
 
-/* Theme-specific border accents */
+/* Theme-specific border accents - UPDATED */
 .border-theme-fire {
   border-color: #F97316;
 }
@@ -514,6 +638,18 @@ a,
 
 .border-theme-venice {
   border-color: #2EC4B6;
+}
+
+.border-theme-gold {
+  border-color: #F59E0B;
+}
+
+.border-theme-basketball-brown {
+  border-color: #EA580C;
+}
+
+.border-theme-green {
+  border-color: #10B981;
 }
 
 /* Hover effects */

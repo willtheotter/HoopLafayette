@@ -28,7 +28,7 @@ module.exports = {
         'fire-orange': '#FF6B35',
         'fire-red': '#F72585',
         
-        // Gold color family (for black & gold theme)
+        // Gold color family (for YouTube Classics & Mamba)
         'gold': {
           50: '#FFF9E6',
           100: '#FFF3CC',
@@ -40,6 +40,81 @@ module.exports = {
           700: '#997500',
           800: '#664E00',
           900: '#332700',
+        },
+        
+        // Amber color family (for YouTube Classics gold theme)
+        'amber': {
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
+        },
+        
+        // Orange/Brown color family (for NBA Highlights)
+        'orange': {
+          50: '#FFF7ED',
+          100: '#FFEDD5',
+          200: '#FED7AA',
+          300: '#FDBA74',
+          400: '#FB923C',
+          500: '#F97316',
+          600: '#EA580C',
+          700: '#C2410C',
+          800: '#9A3412',
+          900: '#7C2D12',
+        },
+        
+        'stone': {
+          50: '#FAFAF9',
+          100: '#F5F5F4',
+          200: '#E7E5E4',
+          300: '#D6D3D1',
+          400: '#A8A29E',
+          500: '#78716C',
+          600: '#57534E',
+          700: '#44403C',
+          800: '#292524',
+          900: '#1C1917',
+        },
+        
+        // Green/Emerald color family (for Newsletter)
+        'emerald': {
+          50: '#ECFDF5',
+          100: '#D1FAE5',
+          200: '#A7F3D0',
+          300: '#6EE7B7',
+          400: '#34D399',
+          500: '#10B981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065F46',
+          900: '#064E3B',
+        },
+        
+        'green': {
+          50: '#F0FDF4',
+          100: '#DCFCE7',
+          200: '#BBF7D0',
+          300: '#86EFAC',
+          400: '#4ADE80',
+          500: '#22C55E',
+          600: '#16A34A',
+          700: '#15803D',
+          800: '#166534',
+          900: '#14532D',
+        },
+        
+        'lime': {
+          400: '#A3E635',
+          500: '#84CC16',
+          600: '#65A30D',
+          700: '#4D7C0F',
         },
         
         // Purple color family (for Lakers theme)
@@ -60,8 +135,14 @@ module.exports = {
         'snake-pattern': "url('/images/snake-texture.png')",
         'wave-pattern': "url('/images/wave-pattern.svg')",
         'fire-pattern': "url('/images/fire-pattern.png')",
+        'retro-grid-pattern': "repeating-linear-gradient(0deg, rgba(245, 158, 11, 0.1) 0px, rgba(245, 158, 11, 0.1) 2px, transparent 2px, transparent 40px), repeating-linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0px, rgba(245, 158, 11, 0.1) 2px, transparent 2px, transparent 40px)",
+        'basketball-pattern': "radial-gradient(circle at 20% 30%, rgba(234, 88, 12, 0.15) 2px, transparent 2px)",
+        'news-pattern': "repeating-linear-gradient(0deg, rgba(16, 185, 129, 0.05) 0px, rgba(16, 185, 129, 0.05) 1px, transparent 1px, transparent 20px)",
         'gradient-radial': 'radial-gradient(circle at center, transparent 0%, black 100%)',
         'noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+      },
+      backgroundSize: {
+        '200%': '200% 200%',
       },
       animation: {
         'flicker': 'flicker 3s infinite',
@@ -78,6 +159,7 @@ module.exports = {
         'bounce': 'bounce 1s ease-in-out infinite',
         'spin-slow': 'spin 8s linear infinite',
         'shimmer': 'shimmer 2s infinite',
+        'spring-bounce': 'springBounce 0.5s ease-out',
       },
       keyframes: {
         flicker: {
@@ -155,15 +237,33 @@ module.exports = {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
-      },
-      backgroundSize: {
-        '200%': '200% 200%',
+        springBounce: {
+          '0%': { transform: 'scale(0.8)', opacity: 0 },
+          '50%': { transform: 'scale(1.05)' },
+          '100%': { transform: 'scale(1)', opacity: 1 },
+        },
       },
       boxShadow: {
+        // Existing glows
         'glow-fire': '0 0 30px rgba(255, 69, 0, 0.7)',
         'glow-lakers': '0 0 30px rgba(253, 185, 39, 0.6)',
         'glow-mamba': '0 0 30px rgba(255, 215, 0, 0.3)',
         'glow-venice': '0 0 30px rgba(0, 255, 255, 0.5)',
+        
+        // New glows for new themes
+        'glow-gold': '0 0 30px rgba(245, 158, 11, 0.5)',
+        'glow-gold-intense': '0 0 40px rgba(245, 158, 11, 0.8)',
+        'glow-brown': '0 0 30px rgba(234, 88, 12, 0.5)',
+        'glow-green': '0 0 30px rgba(16, 185, 129, 0.5)',
+        'glow-green-intense': '0 0 40px rgba(16, 185, 129, 0.8)',
+      },
+      transitionTimingFunction: {
+        'spring-bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'smooth-bounce': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+      },
+      transitionDuration: {
+        '2000': '2000ms',
+        '3000': '3000ms',
       },
     },
   },

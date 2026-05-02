@@ -30,7 +30,19 @@ export interface Theme {
   shadow?: string
 }
 
-export type PageTheme = 'fire' | 'owyhee' | 'lakers' | 'venice' | 'mamba' | 'community' | 'snl' | 'new-balance' | 'ballislife'
+export type PageTheme = 
+  | 'fire' 
+  | 'owyhee' 
+  | 'lakers' 
+  | 'venice' 
+  | 'mamba' 
+  | 'community' 
+  | 'snl' 
+  | 'new-balance' 
+  | 'ballislife'
+  | 'gold'              // YouTube Classics
+  | 'basketball-brown'  // NBA Highlights
+  | 'green'             // Newsletter
 
 // Theme configurations
 export const themeConfig: Record<PageTheme, Theme> = {
@@ -61,8 +73,8 @@ export const themeConfig: Record<PageTheme, Theme> = {
     gradient: 'from-black via-purple-900 via-purple-700 to-amber-400',
     overlay: 'bg-gradient-to-b from-purple-950/40 via-black/40 to-amber-950/40',
     text: 'text-white',
-    accent: 'text-lakers-gold',
-    border: 'border-lakers-gold',
+    accent: 'text-amber-400',
+    border: 'border-amber-400',
     video: 'border-amber-400/30 hover:border-amber-400/60',
     pattern: 'stripes-pattern',
     shadow: 'shadow-glow-lakers'
@@ -80,12 +92,12 @@ export const themeConfig: Record<PageTheme, Theme> = {
   },
   mamba: {
     name: 'Mamba Mentality',
-    gradient: 'from-black via-black via-gold-700 to-gold-500',
-    overlay: 'bg-gradient-to-b from-black/60 via-black/50 to-gold-900/20',
-    text: 'text-gold-400',
-    accent: 'text-gold-400',
-    border: 'border-gold-400',
-    video: 'border-gold-400/30 hover:border-gold-400/60',
+    gradient: 'from-black via-black via-yellow-700 to-yellow-500',
+    overlay: 'bg-gradient-to-b from-black/60 via-black/50 to-yellow-900/20',
+    text: 'text-yellow-400',
+    accent: 'text-yellow-400',
+    border: 'border-yellow-400',
+    video: 'border-yellow-400/30 hover:border-yellow-400/60',
     pattern: 'snake-pattern',
     shadow: 'shadow-glow-mamba'
   },
@@ -132,6 +144,44 @@ export const themeConfig: Record<PageTheme, Theme> = {
     video: 'border-red-500/30 hover:border-red-500/60',
     pattern: 'flame-pattern',
     shadow: 'shadow-glow-fire'
+  },
+  
+  // ========== NEW THEMES ==========
+  
+  gold: {
+    name: 'YouTube Classics',
+    gradient: 'from-black via-amber-900 via-yellow-600 to-amber-300',
+    overlay: 'bg-gradient-to-b from-amber-950/40 via-black/40 to-yellow-950/40',
+    text: 'text-white',
+    accent: 'text-yellow-400',
+    border: 'border-yellow-500',
+    video: 'border-yellow-500/30 hover:border-yellow-500/60',
+    pattern: 'retro-grid-pattern',
+    shadow: 'shadow-glow-gold'
+  },
+  
+  'basketball-brown': {
+    name: 'NBA Highlights',
+    gradient: 'from-black via-amber-800 via-orange-800 to-stone-700',
+    overlay: 'bg-gradient-to-b from-orange-950/50 via-black/50 to-amber-950/50',
+    text: 'text-orange-100',
+    accent: 'text-orange-500',
+    border: 'border-orange-700',
+    video: 'border-orange-700/30 hover:border-orange-500/60',
+    pattern: 'basketball-pattern',
+    shadow: 'shadow-glow-brown'
+  },
+  
+  green: {
+    name: 'Newsletter',
+    gradient: 'from-black via-emerald-900 via-green-700 to-lime-500',
+    overlay: 'bg-gradient-to-b from-emerald-950/40 via-black/40 to-green-950/40',
+    text: 'text-white',
+    accent: 'text-green-400',
+    border: 'border-green-500',
+    video: 'border-green-500/30 hover:border-green-500/60',
+    pattern: 'news-pattern',
+    shadow: 'shadow-glow-green'
   }
 }
 
@@ -208,6 +258,26 @@ export const themeAnimations = {
     initial: { opacity: 0, scale: 0.95 },
     animate: { opacity: 1, scale: 1 }
   },
+  
+  // NEW THEME ANIMATIONS
+  gold: {
+    hover: { scale: 1.03, rotate: -1, transition: { duration: 0.3 } },
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 }
+  },
+  
+  'basketball-brown': {
+    hover: { y: -4, transition: { duration: 0.2, type: 'spring', stiffness: 300 } },
+    initial: { opacity: 0, scale: 0.98 },
+    animate: { opacity: 1, scale: 1 }
+  },
+  
+  green: {
+    hover: { scale: 1.02, transition: { duration: 0.3 } },
+    initial: { opacity: 0, x: -10 },
+    animate: { opacity: 1, x: 0 }
+  },
+  
   default: {
     hover: { scale: 1.02, transition: { duration: 0.3 } },
     initial: { opacity: 0, y: 20 },
@@ -218,4 +288,21 @@ export const themeAnimations = {
 // Get animation variant for a specific theme
 export const getThemeAnimation = (theme: PageTheme) => {
   return themeAnimations[theme] || themeAnimations.default
+}
+
+// Optional: Get all available themes (useful for theme selector pages)
+export const getAllThemes = (): { id: PageTheme; config: Theme }[] => {
+  return Object.entries(themeConfig).map(([id, config]) => ({
+    id: id as PageTheme,
+    config
+  }))
+}
+
+// Optional: Group themes by category (great for cleaned up themes page)
+export const getThemesByCategory = () => {
+  return {
+    '🔥 Basketball Originals': ['fire', 'lakers', 'mamba', 'ballislife'],
+    '🌊 Culture & Scenes': ['venice', 'owyhee', 'community', 'snl'],
+    '⭐ Special Editions': ['gold', 'basketball-brown', 'green', 'new-balance']
+  } as const
 }

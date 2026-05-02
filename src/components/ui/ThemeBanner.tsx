@@ -55,6 +55,21 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
     ballislife: {
       gradient: 'bg-gradient-to-r from-white via-gray-100 to-black',
       text: 'text-black',
+    },
+    
+    // ========== NEW THEMES ==========
+    
+    gold: {
+      gradient: 'bg-gradient-to-r from-amber-700 via-yellow-500 to-amber-800',
+      text: 'text-white',
+    },
+    'basketball-brown': {
+      gradient: 'bg-gradient-to-r from-orange-800 via-amber-700 to-stone-700',
+      text: 'text-orange-100',
+    },
+    green: {
+      gradient: 'bg-gradient-to-r from-emerald-700 via-green-500 to-lime-700',
+      text: 'text-white',
     }
   }
 
@@ -67,11 +82,43 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
     none: ''
   }
 
+  // Custom banner animations based on theme
+  const getBannerAnimation = () => {
+    switch(theme) {
+      case 'gold':
+        return {
+          initial: { opacity: 0, y: -50, rotateX: -15 },
+          animate: { opacity: 1, y: 0, rotateX: 0 },
+          transition: { duration: 0.6, type: "spring" as const, stiffness: 200 }
+        }
+      case 'basketball-brown':
+        return {
+          initial: { opacity: 0, y: -30, scale: 0.98 },
+          animate: { opacity: 1, y: 0, scale: 1 },
+          transition: { duration: 0.5, type: "spring" as const, bounce: 0.4 }
+        }
+      case 'green':
+        return {
+          initial: { opacity: 0, x: -30 },
+          animate: { opacity: 1, x: 0 },
+          transition: { duration: 0.6, type: "spring" as const, stiffness: 250 }
+        }
+      default:
+        return {
+          initial: { opacity: 0, y: -50 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.8, type: "spring" as const }
+        }
+    }
+  }
+
+  const bannerAnimation = getBannerAnimation()
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, type: 'spring' }}
+      initial={bannerAnimation.initial}
+      animate={bannerAnimation.animate}
+      transition={bannerAnimation.transition}
       className={`relative w-full overflow-hidden ${sizeClasses[size]} ${themeStyles[theme].gradient} banner-glow`}
     >
       {/* Pattern Overlay */}
@@ -83,10 +130,10 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
       <motion.div
         animate={{
           scale: [1, 1.05, 1],
-          opacity: [0.3, 0.5, 0.3]
+          opacity: theme === 'gold' ? [0.4, 0.7, 0.4] : [0.3, 0.5, 0.3]
         }}
         transition={{
-          duration: 3,
+          duration: theme === 'gold' ? 2 : 3,
           repeat: Infinity,
           ease: "easeInOut"
         }}
@@ -97,10 +144,14 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
       <div className="relative z-10 container mx-auto px-4 text-center">
         <motion.h1 
           className={`font-black ${themeStyles[theme].text} mb-4 drop-shadow-2xl`}
-          initial={{ scale: 0.5 }}
+          initial={{ scale: theme === 'basketball-brown' ? 0.8 : 0.5 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: 'spring' }}
+          transition={{ delay: 0.2, type: "spring" as const, bounce: theme === 'basketball-brown' ? 0.5 : 0 }}
         >
+          {/* Add themed emoji prefix */}
+          {theme === 'gold' && '🏆 '}
+          {theme === 'basketball-brown' && '🏀 '}
+          {theme === 'green' && '📧 '}
           {title}
         </motion.h1>
         {subtitle && (
@@ -115,8 +166,32 @@ export const ThemeBanner = ({ theme, title, subtitle, pattern = 'none', size = '
         )}
       </div>
 
-      {/* Decorative Border */}
-      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50 ${themeStyles[theme].text}`} />
+      {/* Decorative Border with theme-specific styling */}
+      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50 ${themeStyles[theme].text}`}>
+        {/* Extra decorative element for gold theme */}
+        {theme === 'gold' && (
+          <motion.div 
+            className="absolute inset-0 bg-yellow-400"
+            animate={{ x: ['-100%', '100%'] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          />
+        )}
+      </div>
+
+      {/* Theme-specific corner accents */}
+      {theme === 'gold' && (
+        <>
+          <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-yellow-400/30" />
+          <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-yellow-400/30" />
+        </>
+      )}
+      
+      {theme === 'basketball-brown' && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border-2 border-orange-500/20" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-orange-500/10" />
+        </div>
+      )}
     </motion.div>
   )
 }

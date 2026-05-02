@@ -117,20 +117,29 @@ const eventContent = [
   },
 ]
 
-// Fixed Instagram Embed - Uses direct iframe (no script, no mobile freezing)
+// Instagram Component - Desktop shows embed, Mobile shows button only (no freezing!)
 const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
+  const [isMobile, setIsMobile] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : ''
+      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      setIsMobile(mobile)
+    }
+    checkMobile()
+  }, [])
+
   // Extract the post/reel ID from Instagram URL
   const getEmbedUrl = (instagramUrl: string) => {
-    // Handle different URL formats: /reel/ID, /p/ID, /tv/ID
     const reelMatch = instagramUrl.match(/\/reel\/([A-Za-z0-9_-]+)/)
     const postMatch = instagramUrl.match(/\/p\/([A-Za-z0-9_-]+)/)
     const tvMatch = instagramUrl.match(/\/tv\/([A-Za-z0-9_-]+)/)
     const id = reelMatch?.[1] || postMatch?.[1] || tvMatch?.[1]
     
     if (id) {
-      // Use Instagram's embed-friendly URL (no script required!)
       return `https://www.instagram.com/p/${id}/embed/`
     }
     return null
@@ -138,6 +147,40 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
 
   const embedUrl = getEmbedUrl(url)
 
+  // MOBILE VERSION - Button only (no embed, perfect performance!)
+  if (isMobile) {
+    return (
+      <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+        <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300 h-full flex flex-col">
+          <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
+            <p className="text-sm font-bold text-red-400 mb-3">@{username}</p>
+            
+            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-red-500 via-orange-500 to-yellow-500 flex items-center justify-center mb-4">
+              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
+              </svg>
+            </div>
+
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-orange-600 rounded-xl hover:from-red-500 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 mb-3"
+            >
+              <span className="text-white font-bold">View on Instagram</span>
+              <span className="text-white">→</span>
+            </a>
+
+            <p className="text-sm text-white/80 line-clamp-2">{caption}</p>
+            <p className="text-xs text-white/40 mt-3">Opens in Instagram app</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // DESKTOP VERSION - Full embed
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
@@ -254,11 +297,36 @@ export default function HomePage() {
               </span>
             </h1>
           
-            <div className="flex justify-center mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
+              {/* Main Instagram Link */}
               <Link href="https://www.instagram.com/lafayettehoop" target="_blank" rel="noopener noreferrer">
                 <div className="flex items-center gap-3 px-8 py-3 bg-white/10 rounded-full border border-white/20 hover:bg-white/20 transition duration-300 backdrop-blur-sm">
                   <span className="text-xl">🔥</span>
                   <span className="text-lg font-semibold">Follow the Movement</span>
+                </div>
+              </Link>
+
+              {/* NEW: YouTube Classics Link - Gold Theme */}
+              <Link href="/youtube-classics">
+                <div className="flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-amber-700 via-yellow-500 to-amber-700 rounded-full border border-yellow-500/50 hover:scale-105 transition duration-300 shadow-lg hover:shadow-yellow-500/25">
+                  <span className="text-xl">🏆</span>
+                  <span className="text-lg font-semibold text-white">YouTube Classics</span>
+                </div>
+              </Link>
+
+              {/* NEW: NBA Highlights Link - Basketball Brown Theme */}
+              <Link href="/nba-highlights">
+                <div className="flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-orange-800 via-amber-700 to-stone-700 rounded-full border border-orange-500/50 hover:scale-105 transition duration-300 shadow-lg hover:shadow-orange-500/25">
+                  <span className="text-xl">🏀</span>
+                  <span className="text-lg font-semibold text-orange-100">NBA Highlights</span>
+                </div>
+              </Link>
+
+              {/* NEW: Newsletter Link - Green Theme */}
+              <Link href="/newsletter">
+                <div className="flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-emerald-700 via-green-500 to-lime-700 rounded-full border border-green-500/50 hover:scale-105 transition duration-300 shadow-lg hover:shadow-green-500/25">
+                  <span className="text-xl">📧</span>
+                  <span className="text-lg font-semibold text-white">Newsletter</span>
                 </div>
               </Link>
             </div>
@@ -309,8 +377,68 @@ export default function HomePage() {
             </div>
           </section>
 
+          {/* Featured Pages Section - Showcase the 3 new themes */}
+          <section className="my-16">
+            <SectionDivider theme="fire" variant="wave" className="my-12 opacity-50" />
+            
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-black tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                EXPLORE MORE
+              </h2>
+              <p className="text-white/60 mt-2">Discover our special collections</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* YouTube Classics Card */}
+              <Link href="/youtube-classics">
+                <div className="group relative bg-gradient-to-br from-amber-950/40 to-yellow-950/40 rounded-2xl overflow-hidden border border-yellow-500/30 hover:border-yellow-500/60 transition-all duration-300 hover:scale-105 cursor-pointer">
+                  <div className="p-6 text-center">
+                    <div className="text-6xl mb-4">🏆</div>
+                    <h3 className="text-2xl font-bold text-yellow-400 mb-2">YouTube Classics</h3>
+                    <p className="text-white/70 text-sm">Relive the golden era of viral videos</p>
+                  </div>
+                  <div className="h-1 bg-gradient-to-r from-amber-700 via-yellow-500 to-amber-700 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </div>
+              </Link>
+
+              {/* NBA Highlights Card */}
+              <Link href="/nba-highlights">
+                <div className="group relative bg-gradient-to-br from-orange-950/40 to-amber-950/40 rounded-2xl overflow-hidden border border-orange-500/30 hover:border-orange-500/60 transition-all duration-300 hover:scale-105 cursor-pointer">
+                  <div className="p-6 text-center">
+                    <div className="text-6xl mb-4">🏀</div>
+                    <h3 className="text-2xl font-bold text-orange-400 mb-2">NBA Highlights</h3>
+                    <p className="text-white/70 text-sm">Classic dunks, game winners & mixtapes</p>
+                  </div>
+                  <div className="h-1 bg-gradient-to-r from-orange-800 via-amber-700 to-stone-700 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </div>
+              </Link>
+
+              {/* Newsletter Card */}
+              <Link href="/newsletter">
+                <div className="group relative bg-gradient-to-br from-emerald-950/40 to-green-950/40 rounded-2xl overflow-hidden border border-green-500/30 hover:border-green-500/60 transition-all duration-300 hover:scale-105 cursor-pointer">
+                  <div className="p-6 text-center">
+                    <div className="text-6xl mb-4">📧</div>
+                    <h3 className="text-2xl font-bold text-green-400 mb-2">Newsletter</h3>
+                    <p className="text-white/70 text-sm">Weekly roundups & exclusive content</p>
+                  </div>
+                  <div className="h-1 bg-gradient-to-r from-emerald-700 via-green-500 to-lime-700 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </div>
+              </Link>
+            </div>
+          </section>
+
           <footer className="w-full py-12 mt-16 border-t border-red-500/30">
             <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-4 mb-6">
+                <Link href="/youtube-classics" className="text-white/50 hover:text-yellow-400 text-sm transition">YouTube Classics</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/nba-highlights" className="text-white/50 hover:text-orange-400 text-sm transition">NBA Highlights</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/newsletter" className="text-white/50 hover:text-green-400 text-sm transition">Newsletter</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/themes" className="text-white/50 hover:text-white text-sm transition">All Themes</Link>
+              </div>
+              
               <Link href="https://www.instagram.com/lafayettehoop" target="_blank" rel="noopener noreferrer">
                 <div className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-red-600/30 via-orange-600/30 to-yellow-600/30 backdrop-blur-sm border border-red-500/40 hover:border-yellow-500/60 transition duration-300 group cursor-pointer hover:scale-105 transform">
                   <span className="text-3xl">🏀</span>
@@ -320,6 +448,9 @@ export default function HomePage() {
               </Link>
               <p className="text-white/30 text-sm mt-6">
                 Home of the hottest hoops content • Streetball • Pro-Am • 1v1 • Culture
+              </p>
+              <p className="text-white/20 text-xs mt-4">
+                © {new Date().getFullYear()} Lafayette Hoops • All Rights Reserved
               </p>
             </div>
           </footer>

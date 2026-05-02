@@ -13,7 +13,12 @@ const navItems = [
   { name: 'NEW BALANCE', path: '/new-balance' },
   { name: 'VENICE BEACH', path: '/venice-beach' },
   { name: 'BALLISLIFE', path: '/ballislife' },
-  { name: 'KOBE TRIBUTE', path: '/kobe-tribute' }
+  { name: 'KOBE TRIBUTE', path: '/kobe-tribute' },
+  
+  // ========== NEW PAGES ==========
+  { name: '🏆 YOUTUBE CLASSICS', path: '/youtube-classics' },
+  { name: '🏀 NBA HIGHLIGHTS', path: '/nba-highlights' },
+  { name: '📧 NEWSLETTER', path: '/newsletter' },
 ]
 
 export const MobileMenu = () => {
@@ -41,6 +46,38 @@ export const MobileMenu = () => {
   if (!mounted) return null
 
   const buttonClass = 'lg:hidden fixed top-8 left-4 z-[100] w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 shadow-lg flex items-center justify-center hover:scale-105 transition-all duration-300'
+
+  // Helper function to get theme-specific styles for active page
+  const getActiveStyles = (path: string) => {
+    if (pathname !== path) return ''
+    
+    switch(path) {
+      case '/youtube-classics':
+        return 'border-yellow-400 bg-gradient-to-r from-yellow-500/20 to-transparent'
+      case '/nba-highlights':
+        return 'border-orange-500 bg-gradient-to-r from-orange-500/20 to-transparent'
+      case '/newsletter':
+        return 'border-green-500 bg-gradient-to-r from-green-500/20 to-transparent'
+      default:
+        return 'border-yellow-400 bg-gradient-to-r from-yellow-500/20 to-transparent'
+    }
+  }
+
+  // Helper function to get active text color
+  const getActiveTextColor = (path: string) => {
+    if (pathname !== path) return 'text-white'
+    
+    switch(path) {
+      case '/youtube-classics':
+        return 'text-yellow-400'
+      case '/nba-highlights':
+        return 'text-orange-400'
+      case '/newsletter':
+        return 'text-green-400'
+      default:
+        return 'text-yellow-400'
+    }
+  }
 
   return (
     <>
@@ -86,8 +123,13 @@ export const MobileMenu = () => {
             <nav className="px-4 py-8 max-h-[calc(100vh-320px)] overflow-y-auto">
               {navItems.map((item) => {
                 const isActive = pathname === item.path
-                const linkClass = `block px-4 py-5 mb-2 rounded-xl text-white hover:bg-white/10 transition-all cursor-pointer transform hover:translate-x-2 ${
-                  isActive ? 'bg-gradient-to-r from-yellow-500/20 to-transparent border-l-4 border-yellow-400 font-bold' : ''
+                const activeStyles = getActiveStyles(item.path)
+                const activeTextColor = getActiveTextColor(item.path)
+                
+                const linkClass = `block px-4 py-5 mb-2 rounded-xl transition-all cursor-pointer transform hover:translate-x-2 ${
+                  isActive 
+                    ? `${activeStyles} border-l-4 font-bold ${activeTextColor}`
+                    : 'text-white hover:bg-white/10'
                 }`
                 
                 return (
@@ -103,9 +145,16 @@ export const MobileMenu = () => {
               })}
             </nav>
 
+            {/* Special Section for New Pages Hint */}
+            <div className="px-4 py-3 mx-4 mb-4 rounded-xl bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-green-500/10 border border-white/5">
+              <p className="text-xs text-center text-gray-400">
+                🏆 New: YouTube Classics • 🏀 NBA Highlights • 📧 Newsletter
+              </p>
+            </div>
+
             <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-gradient-to-t from-black to-transparent">
               <div className="flex justify-around text-sm text-gray-400">
-                <span>📱 v1.0</span>
+                <span>📱 v2.0</span>
                 <span>🏀 est. 2024</span>
                 <span>🔥 live</span>
               </div>

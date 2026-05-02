@@ -8,7 +8,7 @@ import { HeroCarousel } from '@/components/ui/HeroCarousel'
 import { SectionDivider } from '@/components/ui/SectionDivider'
 import Link from 'next/link'
 
-const kobeGradient = 'from-yellow-600 via-black to-yellow-700'
+const kobeGradient = 'from-amber-600 via-black to-amber-700'
 
 const eventContent = [
   // YouTube Shorts (8 new shorts)
@@ -114,8 +114,8 @@ const eventContent = [
 const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-yellow-500/30 group-hover:border-yellow-500/50 transition duration-300">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-amber-500/30 group-hover:border-amber-500/50 transition duration-300">
         <div className="aspect-video w-full">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
@@ -127,7 +127,7 @@ const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => 
           />
         </div>
         <div className="p-4 text-center">
-          <h3 className="text-sm font-bold text-white group-hover:text-yellow-400 transition-colors line-clamp-2">
+          <h3 className="text-sm font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2">
             {title}
           </h3>
         </div>
@@ -158,7 +158,7 @@ export default function KobeTributePage() {
       <Header />
 
       <main className="relative flex min-h-screen text-white">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-950/40 via-black/50 to-black/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-950/40 via-black/50 to-black/80 pointer-events-none" />
         
         <SideNavigation />
 
@@ -167,7 +167,7 @@ export default function KobeTributePage() {
 
           <div className="mt-12 mb-8 text-center">
             <h1 className="text-5xl lg:text-7xl font-black tracking-tight mb-4">
-              <span className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">
                 KOBE
               </span>
               <br />
@@ -176,7 +176,7 @@ export default function KobeTributePage() {
               </span>
             </h1>
           
-            <div className="flex justify-center mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
               <Link href="https://www.nike.com/kobe" target="_blank" rel="noopener noreferrer">
                 <div className="flex items-center gap-3 px-8 py-3 bg-white/10 rounded-full border border-white/20 hover:bg-white/20 transition duration-300 backdrop-blur-sm">
                   <span className="text-xl">🐍</span>
@@ -185,17 +185,17 @@ export default function KobeTributePage() {
               </Link>
             </div>
             
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent mt-8 mx-auto" />
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mt-8 mx-auto" />
           </div>
 
           <SectionDivider theme="mamba" variant="wave" className="my-8 opacity-50" />
 
           <section className="my-16">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl lg:text-4xl font-black tracking-tight bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">
+              <h2 className="text-3xl lg:text-4xl font-black tracking-tight bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
                 SHORTS
               </h2>
-              <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-yellow-500/50 to-transparent" />
+              <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-amber-500/50 to-transparent" />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -213,10 +213,10 @@ export default function KobeTributePage() {
 
           <section className="my-16">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl lg:text-4xl font-black tracking-tight bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">
+              <h2 className="text-3xl lg:text-4xl font-black tracking-tight bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
                 CLASSIC MOMENTS
               </h2>
-              <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-yellow-500/50 to-transparent" />
+              <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-amber-500/50 to-transparent" />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -230,17 +230,46 @@ export default function KobeTributePage() {
             </div>
           </section>
 
-          <footer className="w-full py-12 mt-16 border-t border-yellow-500/30">
+          <footer className="w-full py-12 mt-16 border-t border-amber-500/30">
             <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-4 mb-6">
+                <Link href="/" className="text-white/50 hover:text-amber-400 text-sm transition">Home</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/youtube-classics" className="text-white/50 hover:text-yellow-400 text-sm transition">YouTube Classics</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/nba-highlights" className="text-white/50 hover:text-orange-400 text-sm transition">NBA Highlights</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/newsletter" className="text-white/50 hover:text-green-400 text-sm transition">Newsletter</Link>
+                <span className="text-white/20">•</span>
+                <Link href="/themes" className="text-white/50 hover:text-white text-sm transition">All Themes</Link>
+              </div>
+              
               <Link href="https://www.nike.com/kobe" target="_blank" rel="noopener noreferrer">
-                <div className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-yellow-600/30 to-black/60 backdrop-blur-sm border border-yellow-500/40 hover:border-yellow-500/60 transition duration-300 group cursor-pointer hover:scale-105 transform">
+                <div className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-amber-600/30 to-black/60 backdrop-blur-sm border border-amber-500/40 hover:border-amber-500/60 transition duration-300 group cursor-pointer hover:scale-105 transform">
                   <span className="text-3xl">🐍</span>
                   <span className="text-white font-bold text-xl tracking-wider">MAMBA MENTALITY FOREVER</span>
                   <span className="text-3xl">💛</span>
                 </div>
               </Link>
+              <div className="flex flex-wrap justify-center gap-4 mt-6">
+                <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+                  <span className="text-lg">🏆</span>
+                  <span className="text-white/60 text-sm">5x NBA Champion</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+                  <span className="text-lg">⭐</span>
+                  <span className="text-white/60 text-sm">18x All-Star</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+                  <span className="text-lg">🔥</span>
+                  <span className="text-white/60 text-sm">81 Points</span>
+                </div>
+              </div>
               <p className="text-white/30 text-sm mt-6">
                 1978 - 2020 • 5x NBA Champion • 18x All-Star • 81 Points • Mamba Mentality • Legend Never Dies
+              </p>
+              <p className="text-white/20 text-xs mt-4">
+                © {new Date().getFullYear()} Lafayette Hoops • In Memory of Kobe Bryant
               </p>
             </div>
           </footer>
