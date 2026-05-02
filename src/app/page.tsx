@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Header } from '@/components/layout/Header'
 import { ThemePage } from '@/components/layout/ThemePage'
 import { SideNavigation } from '@/components/layout/SideNavigation'
@@ -117,78 +117,67 @@ const eventContent = [
   },
 ]
 
-// NEW: Working Instagram Embed Component
+// Fixed Instagram Embed - Uses direct iframe (no script, no mobile freezing)
 const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [embedLoaded, setEmbedLoaded] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    // Load Instagram embed script
-    const loadInstagramScript = () => {
-      if (document.querySelector('script[src="https://www.instagram.com/embed.js"]')) {
-        return
-      }
-      const script = document.createElement('script')
-      script.src = 'https://www.instagram.com/embed.js'
-      script.async = true
-      script.defer = true
-      document.body.appendChild(script)
+  
+  // Extract the post/reel ID from Instagram URL
+  const getEmbedUrl = (instagramUrl: string) => {
+    // Handle different URL formats: /reel/ID, /p/ID, /tv/ID
+    const reelMatch = instagramUrl.match(/\/reel\/([A-Za-z0-9_-]+)/)
+    const postMatch = instagramUrl.match(/\/p\/([A-Za-z0-9_-]+)/)
+    const tvMatch = instagramUrl.match(/\/tv\/([A-Za-z0-9_-]+)/)
+    const id = reelMatch?.[1] || postMatch?.[1] || tvMatch?.[1]
+    
+    if (id) {
+      // Use Instagram's embed-friendly URL (no script required!)
+      return `https://www.instagram.com/p/${id}/embed/`
     }
+    return null
+  }
 
-    loadInstagramScript()
-
-    // Process embeds after script loads
-    const processEmbeds = () => {
-      if ((window as any).instgrm) {
-        (window as any).instgrm.Embeds.process()
-        setEmbedLoaded(true)
-        setTimeout(() => setIsLoading(false), 500)
-      } else {
-        setTimeout(processEmbeds, 500)
-      }
-    }
-
-    processEmbeds()
-  }, [url])
+  const embedUrl = getEmbedUrl(url)
 
   return (
-    <div className="group relative transition duration-500 hover:-translate-y-2">
+    <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300">
-        <div className="p-4">
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300 h-full flex flex-col">
+        <div className="p-4 flex-1 flex flex-col">
           <p className="text-sm font-bold text-red-400 mb-2">@{username}</p>
           
-          <div ref={containerRef} className="instagram-embed-wrapper min-h-[400px]">
+          <div className="instagram-embed-wrapper min-h-[450px] relative">
             {isLoading && (
-              <div className="flex items-center justify-center py-12">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
               </div>
             )}
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={url}
-              data-instgrm-version="14"
-              style={{
-                background: 'transparent',
-                maxWidth: '540px',
-                minWidth: '326px',
-                width: '100%',
-                margin: '0 auto',
-                display: isLoading ? 'none' : 'block'
-              }}
-            >
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                View on Instagram
-              </a>
-            </blockquote>
+            {embedUrl ? (
+              <iframe
+                src={embedUrl}
+                title={`Instagram post by ${username}`}
+                className="w-full h-full min-h-[450px]"
+                frameBorder="0"
+                scrolling="no"
+                allow="encrypted-media; picture-in-picture; fullscreen"
+                onLoad={() => setIsLoading(false)}
+              />
+            ) : (
+              <div className="flex items-center justify-center py-12 text-white/60">
+                <p>Unable to load post</p>
+              </div>
+            )}
           </div>
 
-          <p className="text-sm text-white/80 mt-3 line-clamp-2">{caption}</p>
-          <div className="mt-2 text-orange-400 text-xs group-hover:text-yellow-400 transition-colors flex items-center gap-1">
-            <span>View original post</span>
+          <p className="text-sm text-white/80 mt-3 line-clamp-2 flex-shrink-0">{caption}</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 text-orange-400 text-xs group-hover:text-yellow-400 transition-colors flex items-center gap-1 flex-shrink-0"
+          >
+            <span>View on Instagram</span>
             <span>→</span>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -197,10 +186,10 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
 
 const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
   return (
-    <div className="group relative transition duration-500 hover:-translate-y-2">
+    <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300">
-        <div className="aspect-video w-full">
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300 h-full flex flex-col">
+        <div className="aspect-video w-full flex-shrink-0">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
             title={title}
@@ -210,7 +199,7 @@ const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => 
             className="w-full h-full"
           />
         </div>
-        <div className="p-4 text-center">
+        <div className="p-4 text-center flex-1 flex items-center justify-center">
           <h3 className="text-sm font-bold text-white group-hover:text-yellow-400 transition-colors line-clamp-2">
             {title}
           </h3>
@@ -287,7 +276,7 @@ export default function HomePage() {
               <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-red-500/50 to-transparent" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
               {instagramPosts.map((item) => (
                 <InstagramEmbed 
                   key={item.id} 
@@ -309,7 +298,7 @@ export default function HomePage() {
               <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-orange-500/50 to-transparent" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
               {youtubeVideos.map((item) => (
                 <YouTubeCard 
                   key={item.id} 
