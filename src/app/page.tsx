@@ -52,14 +52,14 @@ const eventContent = [
     type: 'instagram',
     username: 'jumpman_jaylen',
     url: 'https://www.instagram.com/reel/DXkiwB8DNGv/',
-    caption: 'Spider senses 🕷️ @nba',
+    caption: 'IT’S GETTING DARK OUTSIDE 🌒 @_moooooon',
   },
   {
     id: 'kevin-durant',
     type: 'instagram',
     username: 'ballislife',
     url: 'https://www.instagram.com/reel/DXt5dt9gWZX/',
-    caption: 'Kevin Durant handles 🔥',
+    caption: 'Still crazy 😭 @jamalcain1_  ',
   },
   {
     id: 'kelly-oustine',
@@ -80,7 +80,7 @@ const eventContent = [
     id: 'hezigod-vs-k5-ppv',
     type: 'youtube',
     videoId: 'v9NIs3t44KQ',
-    title: '1V1 PPV: The Hezi God vs K5 - Full Match',
+    title: '1V1 PPV: Nas vs Skoob',
   },
   {
     id: 'lamar-peters-vs-zae',
