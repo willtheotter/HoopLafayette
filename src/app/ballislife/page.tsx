@@ -54,30 +54,26 @@ const eventContent = [
     url: 'https://www.instagram.com/reel/C-3lSmEStvH/',
     caption: 'Would you jump with @ty_g1over ?!?',
   },
-  // YouTube Shorts
+  // YouTube Shorts (no titles)
   {
     id: 'ballislife-short-1',
     type: 'youtube',
     videoId: 'fMVHZ4N5OrI',
-    title: 'Ballislife - Crazy Streetball Moves',
   },
   {
     id: 'ballislife-short-2',
     type: 'youtube',
     videoId: '0VaiVzsvgN8',
-    title: 'Ballislife - Ankle Breakers Compilation',
   },
   {
     id: 'ballislife-short-3',
     type: 'youtube',
     videoId: 'InQt2I3btto',
-    title: 'Ballislife - Park Takeover Moments',
   },
   {
     id: 'ballislife-short-4',
     type: 'youtube',
     videoId: 'DAAYmgUARyk',
-    title: 'Ballislife - Streetball Legends',
   },
 ]
 
@@ -191,25 +187,20 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
   )
 }
 
-const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
+const YouTubeCard = ({ videoId }: { videoId: string }) => {
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-slate-600 to-black rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-slate-500/50 transition duration-300 h-full flex flex-col">
-        <div className="aspect-video w-full flex-shrink-0">
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-slate-500/50 transition duration-300 h-full">
+        <div className="aspect-video w-full">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
-            title={title}
+            title={`Ballislife video ${videoId}`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             className="w-full h-full"
           />
-        </div>
-        <div className="p-4 text-center flex-1 flex items-center justify-center">
-          <h3 className="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2">
-            {title}
-          </h3>
         </div>
       </div>
     </div>
@@ -234,8 +225,8 @@ export default function BallislifePage() {
   )
 
   const youtubeVideos = eventContent.filter(
-    (item): item is typeof item & { videoId: string; title: string } =>
-      item.type === 'youtube' && !!item.videoId && !!item.title
+    (item): item is typeof item & { videoId: string } =>
+      item.type === 'youtube' && !!item.videoId
   )
 
   return (
@@ -316,7 +307,6 @@ export default function BallislifePage() {
                 <YouTubeCard 
                   key={item.id} 
                   videoId={item.videoId} 
-                  title={item.title} 
                 />
               ))}
             </div>
