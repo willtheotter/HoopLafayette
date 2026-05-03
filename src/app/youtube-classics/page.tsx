@@ -60,7 +60,7 @@ const youtubeClassicsContent = [
   { id: 'event-14', videoId: 'qZXztdG-43c', category: 'Events' },
 ]
 
-const YouTubeClassicCard = ({ videoId, category }: { videoId: string; category: string }) => {
+const YouTubeClassicCard = ({ videoId }: { videoId: string }) => {
   return (
     <div className="group relative transition-all duration-500 hover:-translate-y-2">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 rounded-xl opacity-0 group-hover:opacity-100 blur-lg transition duration-300" />
@@ -74,13 +74,6 @@ const YouTubeClassicCard = ({ videoId, category }: { videoId: string; category: 
             allowFullScreen
             className="w-full h-full"
           />
-        </div>
-        <div className="p-4">
-          <div className="flex items-center justify-between">
-            <span className="px-2 py-1 bg-yellow-500/20 rounded-full text-xs text-yellow-400">
-              {category}
-            </span>
-          </div>
         </div>
       </div>
     </div>
@@ -155,7 +148,6 @@ export default function YouTubeClassicsPage() {
                 <ThemeAnimations key={item.id} theme="gold" delay={index * 0.05}>
                   <YouTubeClassicCard 
                     videoId={item.videoId}
-                    category={item.category}
                   />
                 </ThemeAnimations>
               ))}

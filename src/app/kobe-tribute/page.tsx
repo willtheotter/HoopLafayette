@@ -11,107 +11,91 @@ import Link from 'next/link'
 const kobeGradient = 'from-amber-600 via-black to-amber-700'
 
 const eventContent = [
-  // YouTube Shorts (8 new shorts)
+  // YouTube Shorts (8 shorts)
   {
     id: 'kobe-short-1',
     type: 'youtube',
     videoId: 'yBEaH80AcEc',
-    title: 'Kobe Bryant - Mamba Mentality Short',
   },
   {
     id: 'kobe-short-2',
     type: 'youtube',
     videoId: 'rvuaGxOVXyo',
-    title: 'Kobe Bryant - Legendary Moments',
   },
   {
     id: 'kobe-short-3',
     type: 'youtube',
     videoId: 'icoyAVuJGZQ',
-    title: 'Kobe Bryant - The Black Mamba',
   },
   {
     id: 'kobe-short-4',
     type: 'youtube',
     videoId: 'Uhdn0NzvHoc',
-    title: 'Kobe Bryant - Dear Basketball',
   },
   {
     id: 'kobe-short-5',
     type: 'youtube',
     videoId: 'pRImm0zFlCU',
-    title: 'Kobe Bryant - 81 Point Game',
   },
   {
     id: 'kobe-short-6',
     type: 'youtube',
     videoId: 'C8mdP5m7GwA',
-    title: 'Kobe Bryant - Last Game 60 Points',
   },
   {
     id: 'kobe-short-7',
     type: 'youtube',
     videoId: 'a7i0zqfShDY',
-    title: 'Kobe Bryant - Farewell Speech',
   },
   {
     id: 'kobe-short-8',
     type: 'youtube',
     videoId: '1E_xWzmb46U',
-    title: 'Kobe Bryant - Mamba Out',
   },
-  // Existing Videos
+  // Existing Videos (no titles)
   {
     id: 'kobe-81-points',
     type: 'youtube',
     videoId: '46nYnjGdQlk',
-    title: "Kobe's IMMORTAL 81-PT Performance | 20th Anniversary",
   },
   {
     id: 'kobe-speech',
     type: 'youtube',
     videoId: 'RvtxDjKJ5Jk',
-    title: "Kobe Bryant's Best Speech | Greatest Motivation Ever",
   },
   {
     id: 'kobe-clutch',
     type: 'youtube',
     videoId: '2NVfbAtNvpY',
-    title: "Kobe Bryant's Most CLUTCH Moments!",
   },
   {
     id: 'kobe-clutch-40',
     type: 'youtube',
     videoId: 'RFA-cvi0xcE',
-    title: "Kobe Bryant's Top 40 Clutch Moments",
   },
   {
     id: 'kobe-speeches-40',
     type: 'youtube',
     videoId: 'lfkUs6jQ_EU',
-    title: "Kobe Bryant's Top 40 Motivational Speeches",
   },
   {
     id: 'kobe-allstar',
     type: 'youtube',
     videoId: 'vjXK91jf-Zc',
-    title: "Kobe Bryant's Best Play of EACH NBA All-Star Game",
   },
   {
     id: 'kobe-top-40-plays',
     type: 'youtube',
     videoId: '1fjhIWJSxfw',
-    title: "Kobe Bryant's TOP 40 Plays of His NBA Career!",
   },
   {
     id: 'kobe-nike-commercial',
     type: 'youtube',
     videoId: 'h0qglJu0aD8',
-    title: "Kobe System | Nike Commercial",
   },
 ]
 
-const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
+const YouTubeCard = ({ videoId }: { videoId: string }) => {
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
@@ -119,17 +103,12 @@ const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => 
         <div className="aspect-video w-full">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
-            title={title}
+            title={`YouTube video ${videoId}`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             className="w-full h-full"
           />
-        </div>
-        <div className="p-4 text-center">
-          <h3 className="text-sm font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2">
-            {title}
-          </h3>
         </div>
       </div>
     </div>
@@ -149,8 +128,8 @@ export default function KobeTributePage() {
 
   // Type-safe filtering with non-null assertions
   const youtubeVideos = eventContent.filter(
-    (item): item is typeof item & { videoId: string; title: string } =>
-      item.type === 'youtube' && !!item.videoId && !!item.title
+    (item): item is typeof item & { videoId: string } =>
+      item.type === 'youtube' && !!item.videoId
   )
 
   return (
@@ -203,7 +182,6 @@ export default function KobeTributePage() {
                 <YouTubeCard 
                   key={item.id} 
                   videoId={item.videoId} 
-                  title={item.title} 
                 />
               ))}
             </div>
@@ -224,7 +202,6 @@ export default function KobeTributePage() {
                 <YouTubeCard 
                   key={item.id} 
                   videoId={item.videoId} 
-                  title={item.title} 
                 />
               ))}
             </div>

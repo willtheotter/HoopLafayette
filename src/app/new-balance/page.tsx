@@ -184,19 +184,16 @@ const eventContent = [
     id: 'kotc-youtube',
     type: 'youtube',
     videoId: '90BXJd9yDb4',
-    title: 'Uncle Skoob & SCAR WENT AT IT! | KOTC Ft. J Lew, Hezi God + 5v5!!',
   },
   {
     id: 'new-video',
     type: 'youtube',
     videoId: '9BPZ2c2AnrE',
-    title: 'Oakley Meta X New Balance All-Star Weekend',
   },
   {
     id: 'kicktheconcrete',
     type: 'youtube',
     videoId: 'MoU3Ag2i8po',
-    title: 'New Balance NBA All-Star Los Angeles Activation',
   },
 ]
 
@@ -310,25 +307,20 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
   )
 }
 
-const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
+const YouTubeCard = ({ videoId }: { videoId: string }) => {
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full flex flex-col">
-        <div className="aspect-video w-full flex-shrink-0">
+      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full">
+        <div className="aspect-video w-full">
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
-            title={title}
+            title={`YouTube video ${videoId}`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             className="w-full h-full"
           />
-        </div>
-        <div className="p-4 text-center flex-1 flex items-center justify-center">
-          <h3 className="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2">
-            {title}
-          </h3>
         </div>
       </div>
     </div>
@@ -353,8 +345,8 @@ export default function EventActivationPage() {
   )
 
   const youtubeVideos = eventContent.filter(
-    (item): item is typeof item & { videoId: string; title: string } =>
-      item.type === 'youtube' && !!item.videoId && !!item.title
+    (item): item is typeof item & { videoId: string } =>
+      item.type === 'youtube' && !!item.videoId
   )
 
   return (
@@ -429,7 +421,6 @@ export default function EventActivationPage() {
                 <YouTubeCard 
                   key={item.id} 
                   videoId={item.videoId} 
-                  title={item.title} 
                 />
               ))}
             </div>
