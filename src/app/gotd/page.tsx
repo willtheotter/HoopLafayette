@@ -13,10 +13,15 @@ export default function GOTDPage() {
   const playlistId = 'PLN3FmH1w6ROsLAE3IUgpN9WpOfWfOjBJc'
 
   const featuredVideos = [
-    { id: 'wGWi-z4zUKU', title: 'GOTD Highlight 1', duration: '4:32' },
-    { id: 'VetHD8OiF0Y', title: 'GOTD Highlight 2', duration: '5:18' },
-    { id: 'VZXLa0ll4z4', title: 'Sunday Funday: Venice Beach Basketball', duration: '8:45' },
-    { id: 'e2AJyjIFN2s', title: 'Game of the Day: Venice Beach Edition', duration: '6:22' }
+    { id: 'U7fu6Cmbcxc', title: 'Lafayette Monday goes past 9, again (4/20/26)'},
+    { id: 'd4wPaeFqSMk', title: 'Is this not game of the day?? (4/20/26)'},
+    { id: 'zKOd2-BnK0s', title: 'Lafayette: The Experience (4/8/26)'},
+    { id: 'otYRhWZZnwE', title: 'Does Lafayette Play Skunk (4/1/26)'},
+    { id: 'wDZcbtU3mkI', title: 'Lafayette Wednesday (3/25/26)'},
+    { id: 'TqyTzOnegVk', title: 'Game of the Day (3/23/26)'},
+    { id: 'b9z1pAApCjo', title: 'Is Lafayette Back?!? (3/23/26)'},
+    { id: 'wGWi-z4zUKU', title: 'Game of the Day (9/11)'},
+    { id: 'VetHD8OiF0Y', title: 'Lafayette Monday Pt. 3 (8/26)'}
   ]
 
   return (
@@ -58,11 +63,11 @@ export default function GOTDPage() {
               </div>
               <div className="flex items-center gap-2 px-3 py-1 bg-purple-600/20 rounded-full border border-purple-400/30">
                 <span className="text-purple-400 text-sm">⭐</span>
-                <span className="text-xs text-white/80">Top Highlights</span>
+                <span className="text-xs text-white/80">The Best Battles</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-1 bg-amber-600/20 rounded-full border border-amber-400/30">
                 <span className="text-amber-400 text-sm">🔥</span>
-                <span className="text-xs text-white/80">Daily Updates</span>
+                <span className="text-xs text-white/80">Best Weekday Run</span>
               </div>
             </div>
             <div className="h-px w-32 bg-gradient-to-r from-amber-500 via-purple-500 to-transparent mt-8 mx-auto lg:mx-0" />
@@ -98,7 +103,7 @@ export default function GOTDPage() {
 
             <p className="text-center text-sm text-amber-200/60 mt-4 flex items-center justify-center gap-2">
               <span className="inline-block w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
-              📺 Scroll within the player to browse all GOTD videos
+              📺 Scroll within this playlist to watch the organic buildup
             </p>
           </section>
 
@@ -133,11 +138,6 @@ export default function GOTDPage() {
                         allowFullScreen
                         className="w-full h-full"
                       />
-                      
-                      {/* Duration badge */}
-                      <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm px-2 py-1 rounded text-xs font-mono text-amber-400 border border-amber-400/30">
-                        {video.duration}
-                      </div>
                     </div>
 
                     <div className="p-4">
@@ -156,32 +156,11 @@ export default function GOTDPage() {
             </div>
           </section>
 
-          {/* Stats Section with Lakers Colors */}
-          <div className="py-12 mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { label: 'GAMES FEATURED', value: '100+', icon: '🏀' },
-                { label: 'PLAYERS SHOWCASED', value: '500+', icon: '⭐' },
-                { label: 'DAILY UPDATES', value: '24/7', icon: '🔄' }
-              ].map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className="text-center p-6 rounded-2xl bg-gradient-to-br from-amber-600/10 to-purple-600/10 backdrop-blur-sm border border-amber-400/20 hover:border-purple-400/40 transition-all duration-300 hover:-translate-y-1"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="text-3xl mb-2">{stat.icon}</div>
-                  <div className="text-2xl font-black text-amber-400">{stat.value}</div>
-                  <div className="text-xs text-purple-200/80 tracking-wider mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Call to Action with Lakers Colors */}
           <div className="py-8 text-center">
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600/20 to-amber-600/20 backdrop-blur-sm border border-amber-400/30 hover:border-purple-400/60 transition-all duration-300 group">
               <span className="text-2xl group-hover:animate-bounce">🏆</span>
-              <span className="text-white/90 text-sm tracking-wider">#GAMEOETHEDAY • PURPLE & GOLD • LAKERS LEGACY</span>
+              <span className="text-white/90 text-sm tracking-wider">#GAMEOFTHEDAY • PURPLE & GOLD • LAKERS LEGACY</span>
               <span className="text-2xl group-hover:animate-bounce delay-100">💜</span>
             </div>
           </div>

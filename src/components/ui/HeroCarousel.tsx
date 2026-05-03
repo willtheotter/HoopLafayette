@@ -69,15 +69,6 @@ const slides = [
     cta: "Relive it",
     link: "/ballislife"
   },
-  {
-    id: 8,
-    title: "Kobe Tribute",
-    subtitle: "Pay Homage to the Black Mamba's Best Moments",
-    video: "/videos/kobe.mp4",
-    image: "/images/kobe.jpg",
-    cta: "Pay Respect",
-    link: "/kobe-tribute"
-  }
 ]
 
 export const HeroCarousel = () => {
@@ -90,7 +81,7 @@ export const HeroCarousel = () => {
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // 🔥 Initialize carousel to start on current page
+  // Initialize carousel to start on current page
   useEffect(() => {
     const matchingIndex = slides.findIndex(slide => slide.link === pathname)
     if (matchingIndex !== -1) {
@@ -101,20 +92,20 @@ export const HeroCarousel = () => {
     setHasInitialized(true)
   }, [pathname])
 
-  // 🔥 Auto-slide - 15 seconds
+  // Auto-slide - 15 seconds (disabled on mobile when touching)
   useEffect(() => {
     if (!hasInitialized || isHovered) return
 
     intervalRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length)
-    }, 15000) // 15 seconds
+    }, 15000)
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
   }, [isHovered, hasInitialized])
 
-  // 🔥 Swipe logic
+  // Mobile swipe logic
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX)
   }
@@ -142,21 +133,21 @@ export const HeroCarousel = () => {
 
   return (
     <div
-      className="relative w-full h-[70vh] rounded-2xl overflow-hidden shadow-2xl"
+      className="relative w-full h-[60vh] md:h-[70vh] rounded-xl md:rounded-2xl overflow-hidden shadow-xl md:shadow-2xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* 🔥 Slides */}
+      {/* Slides */}
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="absolute inset-0"
         >
           {/* Video or Image */}
@@ -177,37 +168,37 @@ export const HeroCarousel = () => {
             />
           )}
 
-          {/* 🔥 Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          {/* Overlay - darker on mobile for better text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-          {/* 🔥 Content - Center aligned button */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-xl text-center px-4">
+          {/* Content - Mobile optimized */}
+          <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 w-full max-w-xl text-center px-4">
             <motion.h2
-              initial={{ y: 40, opacity: 0 }}
+              initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-extrabold mb-2 text-white drop-shadow-lg"
+              className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-1 md:mb-2 text-white drop-shadow-lg px-2"
             >
               {slides[current].title}
             </motion.h2>
 
             <motion.p
-              initial={{ y: 40, opacity: 0 }}
+              initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-lg text-gray-200 mb-6 drop-shadow-md"
+              className="text-sm sm:text-base md:text-lg text-gray-200 mb-4 md:mb-6 drop-shadow-md px-2"
             >
               {slides[current].subtitle}
             </motion.p>
 
             <motion.div
-              initial={{ y: 40, opacity: 0 }}
+              initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
               <Link
                 href={slides[current].link}
-                className="inline-block px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 transition-all duration-300 rounded-lg font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="inline-block px-6 md:px-8 py-2.5 md:py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 active:from-yellow-700 active:to-amber-800 transition-all duration-300 rounded-lg font-bold text-white shadow-lg active:shadow-md transform active:scale-95 text-sm md:text-base"
               >
                 {slides[current].cta}
               </Link>
@@ -216,10 +207,10 @@ export const HeroCarousel = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* 🔥 Arrows */}
+      {/* Navigation Arrows - Hidden on mobile, only show on tablet/desktop */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
+        className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 items-center justify-center transition-all duration-300 hover:scale-110"
         aria-label="Previous slide"
       >
         ‹
@@ -227,28 +218,35 @@ export const HeroCarousel = () => {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
+        className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-3 rounded-full text-white text-2xl w-12 h-12 items-center justify-center transition-all duration-300 hover:scale-110"
         aria-label="Next slide"
       >
         ›
       </button>
 
-      {/* 🔥 Progress Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 w-[60%]">
+      {/* Progress Indicators - Touch friendly */}
+      <div className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2 w-[80%] md:w-[60%]">
         {slides.map((_, index) => (
           <div
             key={index}
-            className="flex-1 h-[4px] bg-white/30 rounded overflow-hidden cursor-pointer"
+            className="flex-1 h-1 md:h-[4px] bg-white/30 rounded-full overflow-hidden cursor-pointer"
             onClick={() => setCurrent(index)}
           >
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: current === index && !isHovered ? '100%' : '0%' }}
               transition={{ duration: 15, ease: 'linear' }}
-              className="h-full bg-gradient-to-r from-yellow-500 to-amber-600"
+              className="h-full bg-gradient-to-r from-yellow-500 to-amber-600 rounded-full"
             />
           </div>
         ))}
+      </div>
+
+      {/* Mobile swipe hint (optional) */}
+      <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 animate-pulse">
+        <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+          Swipe →
+        </div>
       </div>
     </div>
   )

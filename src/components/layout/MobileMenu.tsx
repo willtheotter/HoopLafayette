@@ -16,9 +16,9 @@ const navItems = [
   { name: 'KOBE TRIBUTE', path: '/kobe-tribute' },
   
   // ========== NEW PAGES ==========
-  { name: '🏆 YOUTUBE CLASSICS', path: '/youtube-classics' },
-  { name: '🏀 NBA HIGHLIGHTS', path: '/nba-highlights' },
-  { name: '📧 NEWSLETTER', path: '/newsletter' },
+  { name: 'YOUTUBE CLASSICS', path: '/youtube-classics' },
+  { name: 'NBA HIGHLIGHTS', path: '/nba-highlights' },
+  { name: 'NEWSLETTER', path: '/newsletter' },
 ]
 
 export const MobileMenu = () => {
@@ -144,21 +144,6 @@ export const MobileMenu = () => {
                 )
               })}
             </nav>
-
-            {/* Special Section for New Pages Hint */}
-            <div className="px-4 py-3 mx-4 mb-4 rounded-xl bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-green-500/10 border border-white/5">
-              <p className="text-xs text-center text-gray-400">
-                🏆 New: YouTube Classics • 🏀 NBA Highlights • 📧 Newsletter
-              </p>
-            </div>
-
-            <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-gradient-to-t from-black to-transparent">
-              <div className="flex justify-around text-sm text-gray-400">
-                <span>📱 v2.0</span>
-                <span>🏀 est. 2024</span>
-                <span>🔥 live</span>
-              </div>
-            </div>
           </div>
         </div>,
         document.body
