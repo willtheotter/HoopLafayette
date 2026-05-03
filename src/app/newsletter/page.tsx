@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
 import { ThemePage } from '@/components/layout/ThemePage'
 import { SideNavigation } from '@/components/layout/SideNavigation'
@@ -111,33 +111,95 @@ const newsletterContent = [
   },
 ]
 
-// Instagram Component - Desktop shows embed, Mobile shows button only
+// Instagram Component - Official Blockquote Method
 const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
-  const [isMobile, setIsMobile] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  
+  const [isMobile, setIsMobile] = useState(false)
+  const [error, setError] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const scriptLoadedRef = useRef(false)
+
+  // Check for mobile devices
   useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : ''
-      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
-      setIsMobile(mobile)
+    const checkDevice = () => {
+      const userAgent = window.navigator.userAgent
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      const isSmallScreen = window.innerWidth < 768
+      setIsMobile(isMobileUA || isSmallScreen)
     }
-    checkMobile()
+    
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    return () => window.removeEventListener('resize', checkDevice)
   }, [])
 
-  const getEmbedUrl = (instagramUrl: string) => {
-    const reelMatch = instagramUrl.match(/\/reel\/([A-Za-z0-9_-]+)/)
-    const postMatch = instagramUrl.match(/\/p\/([A-Za-z0-9_-]+)/)
-    const id = reelMatch?.[1] || postMatch?.[1]
+  // Load Instagram embed script and process embeds
+  useEffect(() => {
+    if (isMobile) return // Don't load script on mobile
+
+    let retryCount = 0
+    const maxRetries = 15
     
-    if (id) {
-      return `https://www.instagram.com/p/${id}/embed/`
+    const loadInstagramScript = () => {
+      // Check if script already exists
+      if (document.querySelector('script[src="https://www.instagram.com/embed.js"]')) {
+        scriptLoadedRef.current = true
+        processEmbeds()
+        return
+      }
+
+      // Create and load script
+      const script = document.createElement('script')
+      script.src = 'https://www.instagram.com/embed.js'
+      script.async = true
+      script.defer = true
+      
+      script.onload = () => {
+        scriptLoadedRef.current = true
+        processEmbeds()
+      }
+      
+      script.onerror = () => {
+        console.error('Failed to load Instagram embed script')
+        setError(true)
+        setIsLoading(false)
+      }
+      
+      document.body.appendChild(script)
     }
-    return null
-  }
 
-  const embedUrl = getEmbedUrl(url)
+    const processEmbeds = () => {
+      // Check if Instagram embed API is ready
+      if ((window as any).instgrm && (window as any).instgrm.Embeds) {
+        try {
+          (window as any).instgrm.Embeds.process()
+          setIsLoading(false)
+        } catch (err) {
+          console.error('Error processing Instagram embeds:', err)
+          setError(true)
+          setIsLoading(false)
+        }
+      } else if (retryCount < maxRetries) {
+        retryCount++
+        setTimeout(processEmbeds, 500)
+      } else {
+        // Timeout - show error
+        setError(true)
+        setIsLoading(false)
+      }
+    }
 
+    if (!isMobile) {
+      loadInstagramScript()
+    }
+
+    // Cleanup not needed for script
+    return () => {
+      // No cleanup needed
+    }
+  }, [url, isMobile])
+
+  // Mobile view - button only
   if (isMobile) {
     return (
       <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
@@ -149,6 +211,8 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
             <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-500 to-green-600 flex items-center justify-center mb-4">
               <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
+                <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                <circle cx="17.5" cy="6.5" r="1.5"/>
               </svg>
             </div>
 
@@ -170,44 +234,72 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
     )
   }
 
+  // Error view
+  if (error) {
+    return (
+      <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+        <div className="relative bg-red-500/10 backdrop-blur-sm rounded-xl border border-red-500/30 p-6 text-center h-full flex flex-col items-center justify-center">
+          <svg className="w-12 h-12 text-red-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <p className="text-red-400 text-sm mb-3">Failed to load Instagram post</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-emerald-400 text-sm underline hover:text-emerald-300 transition"
+          >
+            View on Instagram →
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  // Desktop view - Official Instagram Blockquote Embed
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-emerald-500/30 group-hover:border-green-500/50 transition duration-300 h-full flex flex-col">
         <div className="p-4 flex-1 flex flex-col">
-          <p className="text-sm font-bold text-emerald-400 mb-2">@{username}</p>
+          <p className="text-sm font-bold text-emerald-400 mb-2 shrink-0">@{username}</p>
           
-          <div className="instagram-embed-wrapper min-h-[450px] relative">
+          <div ref={containerRef} className="instagram-embed-wrapper min-h-[450px] relative">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg z-10">
                 <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
               </div>
             )}
-            {embedUrl ? (
-              <iframe
-                src={embedUrl}
-                title={`Instagram post by ${username}`}
-                className="w-full h-full min-h-[450px]"
-                frameBorder="0"
-                scrolling="no"
-                allow="encrypted-media; picture-in-picture; fullscreen"
-                onLoad={() => setIsLoading(false)}
-              />
-            ) : (
-              <div className="flex items-center justify-center py-12 text-white/60">
-                <p>Unable to load post</p>
-              </div>
-            )}
+            
+            {/* Official Instagram Blockquote Embed */}
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink={url}
+              data-instgrm-version="14"
+              style={{
+                background: 'transparent',
+                maxWidth: '540px',
+                minWidth: '326px',
+                width: 'calc(100% - 2px)',
+                margin: '0 auto',
+                display: isLoading ? 'none' : 'block'
+              }}
+            >
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                Loading Instagram Post...
+              </a>
+            </blockquote>
           </div>
 
-          <p className="text-sm text-white/80 mt-3 line-clamp-2 flex-shrink-0">{caption}</p>
+          <p className="text-sm text-white/80 mt-3 line-clamp-2 shrink-0">{caption}</p>
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 text-green-400 text-xs group-hover:text-emerald-400 transition-colors flex items-center gap-1 flex-shrink-0"
+            className="mt-2 text-green-400 text-xs hover:text-emerald-400 transition-colors flex items-center gap-1 shrink-0"
           >
-            <span>View on Instagram</span>
+            <span>View original post</span>
             <span>→</span>
           </a>
         </div>
