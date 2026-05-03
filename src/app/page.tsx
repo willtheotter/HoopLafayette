@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
 import { ThemePage } from '@/components/layout/ThemePage'
 import { SideNavigation } from '@/components/layout/SideNavigation'
@@ -132,19 +132,26 @@ const eventContent = [
   },
 ]
 
-// Instagram Component - Desktop shows embed, Mobile shows button only (no freezing!)
+// Instagram Component - Desktop uses blockquote (interactive), Mobile uses iframe with overlay
 const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
-  const [isMobile, setIsMobile] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  
-  // Detect mobile device
+  const [isMobile, setIsMobile] = useState(false)
+  const [error, setError] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const scriptLoadedRef = useRef(false)
+
+  // Check for mobile devices
   useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : ''
-      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
-      setIsMobile(mobile)
+    const checkDevice = () => {
+      const userAgent = window.navigator.userAgent
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      const isSmallScreen = window.innerWidth < 768
+      setIsMobile(isMobileUA || isSmallScreen)
     }
-    checkMobile()
+    
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    return () => window.removeEventListener('resize', checkDevice)
   }, [])
 
   // Extract the post/reel ID from Instagram URL
@@ -162,78 +169,204 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
 
   const embedUrl = getEmbedUrl(url)
 
-  // MOBILE VERSION - Button only (no embed, perfect performance!)
+  // Load Instagram embed script (desktop only - for blockquote method)
+  useEffect(() => {
+    if (isMobile) return // Don't load script on mobile, we use iframe instead
+
+    let retryCount = 0
+    const maxRetries = 15
+    
+    const loadInstagramScript = () => {
+      // Check if script already exists
+      if (document.querySelector('script[src="https://www.instagram.com/embed.js"]')) {
+        scriptLoadedRef.current = true
+        processEmbeds()
+        return
+      }
+
+      // Create and load script
+      const script = document.createElement('script')
+      script.src = 'https://www.instagram.com/embed.js'
+      script.async = true
+      script.defer = true
+      
+      script.onload = () => {
+        scriptLoadedRef.current = true
+        processEmbeds()
+      }
+      
+      script.onerror = () => {
+        console.error('Failed to load Instagram embed script')
+        setError(true)
+        setIsLoading(false)
+      }
+      
+      document.body.appendChild(script)
+    }
+
+    const processEmbeds = () => {
+      // Check if Instagram embed API is ready
+      if ((window as any).instgrm && (window as any).instgrm.Embeds) {
+        try {
+          (window as any).instgrm.Embeds.process()
+          setIsLoading(false)
+        } catch (err) {
+          console.error('Error processing Instagram embeds:', err)
+          setError(true)
+          setIsLoading(false)
+        }
+      } else if (retryCount < maxRetries) {
+        retryCount++
+        setTimeout(processEmbeds, 500)
+      } else {
+        // Timeout - show error
+        setError(true)
+        setIsLoading(false)
+      }
+    }
+
+    if (!isMobile) {
+      loadInstagramScript()
+    }
+
+    return () => {
+      // No cleanup needed
+    }
+  }, [url, isMobile])
+
+  // Error view (for both desktop and mobile)
+  if (error) {
+    return (
+      <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+        <div className="relative bg-red-500/10 backdrop-blur-sm rounded-xl border border-red-500/30 p-6 text-center h-full flex flex-col items-center justify-center">
+          <svg className="w-12 h-12 text-red-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <p className="text-red-400 text-sm mb-3">Failed to load Instagram post</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-orange-400 text-sm underline hover:text-yellow-400 transition"
+          >
+            View on Instagram →
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  // MOBILE VERSION - Iframe with overlay (can't play, must tap to open Instagram)
   if (isMobile) {
     return (
       <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
         <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
         <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300 h-full flex flex-col">
-          <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
-            <p className="text-sm font-bold text-red-400 mb-3">@{username}</p>
+          <div className="p-4 flex-1 flex flex-col">
+            <p className="text-sm font-bold text-red-400 mb-2 shrink-0">@{username}</p>
             
-            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-red-500 via-orange-500 to-yellow-500 flex items-center justify-center mb-4">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
-              </svg>
+            <div className="instagram-embed-wrapper min-h-[450px] relative">
+              {/* Loading spinner */}
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg z-10">
+                  <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+              
+              {/* Iframe (loads but can't be interacted with due to overlay) */}
+              {embedUrl ? (
+                <>
+                  <iframe
+                    src={embedUrl}
+                    title={`Instagram post by ${username}`}
+                    className="w-full h-full min-h-[450px] pointer-events-none"
+                    frameBorder="0"
+                    scrolling="no"
+                    allow="encrypted-media; picture-in-picture; fullscreen"
+                    onLoad={() => setIsLoading(false)}
+                  />
+                  {/* Overlay that opens Instagram when tapped */}
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 z-20 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"
+                  >
+                    <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-xl px-6 py-3 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                      <div className="flex items-center gap-2">
+                        <span className="text-white font-bold">View on Instagram</span>
+                        <span className="text-white">→</span>
+                      </div>
+                    </div>
+                  </a>
+                </>
+              ) : (
+                <div className="flex items-center justify-center py-12 text-white/60">
+                  <p>Unable to load post</p>
+                </div>
+              )}
             </div>
 
+            <p className="text-sm text-white/80 mt-3 line-clamp-2 shrink-0">{caption}</p>
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-orange-600 rounded-xl hover:from-red-500 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 mb-3"
+              className="mt-2 text-orange-400 text-xs hover:text-yellow-400 transition-colors flex items-center gap-1 shrink-0"
             >
-              <span className="text-white font-bold">View on Instagram</span>
-              <span className="text-white">→</span>
+              <span>View original post</span>
+              <span>→</span>
             </a>
-
-            <p className="text-sm text-white/80 line-clamp-2">{caption}</p>
-            <p className="text-xs text-white/40 mt-3">Opens in Instagram app</p>
           </div>
         </div>
       </div>
     )
   }
 
-  // DESKTOP VERSION - Full embed
+  // DESKTOP VERSION - Official Instagram Blockquote Embed (fully interactive)
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300 h-full flex flex-col">
         <div className="p-4 flex-1 flex flex-col">
-          <p className="text-sm font-bold text-red-400 mb-2">@{username}</p>
+          <p className="text-sm font-bold text-red-400 mb-2 shrink-0">@{username}</p>
           
-          <div className="instagram-embed-wrapper min-h-[450px] relative">
+          <div ref={containerRef} className="instagram-embed-wrapper min-h-[450px] relative">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg z-10">
                 <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
               </div>
             )}
-            {embedUrl ? (
-              <iframe
-                src={embedUrl}
-                title={`Instagram post by ${username}`}
-                className="w-full h-full min-h-[450px]"
-                frameBorder="0"
-                scrolling="no"
-                allow="encrypted-media; picture-in-picture; fullscreen"
-                onLoad={() => setIsLoading(false)}
-              />
-            ) : (
-              <div className="flex items-center justify-center py-12 text-white/60">
-                <p>Unable to load post</p>
-              </div>
-            )}
+            
+            {/* Official Instagram Blockquote Embed - Fully interactive on desktop */}
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink={url}
+              data-instgrm-version="14"
+              style={{
+                background: 'transparent',
+                maxWidth: '540px',
+                minWidth: '326px',
+                width: 'calc(100% - 2px)',
+                margin: '0 auto',
+                display: isLoading ? 'none' : 'block'
+              }}
+            >
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                Loading Instagram Post...
+              </a>
+            </blockquote>
           </div>
 
-          <p className="text-sm text-white/80 mt-3 line-clamp-2 flex-shrink-0">{caption}</p>
+          <p className="text-sm text-white/80 mt-3 line-clamp-2 shrink-0">{caption}</p>
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 text-orange-400 text-xs group-hover:text-yellow-400 transition-colors flex items-center gap-1 flex-shrink-0"
+            className="mt-2 text-orange-400 text-xs hover:text-yellow-400 transition-colors flex items-center gap-1 shrink-0"
           >
-            <span>View on Instagram</span>
+            <span>View original post</span>
             <span>→</span>
           </a>
         </div>
@@ -242,20 +375,120 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
   )
 }
 
+// Improved YouTube Component with lazy loading, loading states, and error handling
 const YouTubeCard = ({ videoId, title }: { videoId: string; title: string }) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const [isInView, setIsInView] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isInView) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        })
+      },
+      { rootMargin: '200px' } // Load when within 200px of viewport
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [isInView])
+
+  const handleIframeLoad = () => {
+    setIsLoading(false)
+  }
+
+  const handleIframeError = () => {
+    setHasError(true)
+    setIsLoading(false)
+  }
+
+  // YouTube thumbnail URL for placeholder
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+  const fallbackThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+  const youtubeUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&modestbranding=1&rel=0&showinfo=0`
+
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-yellow-500/50 transition duration-300 h-full flex flex-col">
-        <div className="aspect-video w-full flex-shrink-0">
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="w-full h-full"
-          />
+        <div ref={containerRef} className="aspect-video w-full flex-shrink-0 relative bg-black/80">
+          {/* Loading State */}
+          {isLoading && !hasError && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/60">
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 border-3 border-orange-400 border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs text-orange-400/80">Loading video...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Error State */}
+          {hasError && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/80">
+              <div className="text-center p-4">
+                <svg className="w-12 h-12 text-red-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <p className="text-red-400 text-sm mb-2">Failed to load video</p>
+                <a 
+                  href={`https://www.youtube.com/watch?v=${videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-orange-400 text-xs underline hover:text-yellow-300"
+                >
+                  Watch on YouTube →
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Thumbnail Placeholder (shows while loading) */}
+          {isLoading && !hasError && (
+            <div className="absolute inset-0 z-5">
+              <img 
+                src={thumbnailUrl}
+                alt={title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Fallback to standard quality if maxres doesn't exist
+                  (e.target as HTMLImageElement).src = fallbackThumbnail
+                }}
+                loading="lazy"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-black/60 flex items-center justify-center backdrop-blur-sm hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* YouTube Iframe - only loads when in viewport */}
+          {isInView && !hasError && (
+            <iframe
+              src={youtubeUrl}
+              title={title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+              onLoad={handleIframeLoad}
+              onError={handleIframeError}
+            />
+          )}
         </div>
         <div className="p-4 text-center flex-1 flex items-center justify-center">
           <h3 className="text-sm font-bold text-white group-hover:text-yellow-400 transition-colors line-clamp-2">
