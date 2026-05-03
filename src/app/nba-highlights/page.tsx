@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
 import { ThemePage } from '@/components/layout/ThemePage'
 import { SideNavigation } from '@/components/layout/SideNavigation'
@@ -83,21 +83,120 @@ const nbaHighlightsContent: NBAHighlight[] = [
   { id: '20-8', videoId: 'oNG4qTstFzI', era: '2020s', popularity: 8 },
 ]
 
+// Improved YouTube Component with lazy loading, loading states, and error handling
 const NBAHighlightCard = ({ videoId }: { videoId: string }) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const [isInView, setIsInView] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isInView) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        })
+      },
+      { rootMargin: '200px' } // Load when within 200px of viewport
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [isInView])
+
+  const handleIframeLoad = () => {
+    setIsLoading(false)
+  }
+
+  const handleIframeError = () => {
+    setHasError(true)
+    setIsLoading(false)
+  }
+
+  // YouTube thumbnail URL for placeholder
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+  const fallbackThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+  const youtubeUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&modestbranding=1&rel=0&showinfo=0`
+
   return (
     <div className="group relative transition-all duration-500 hover:-translate-y-2">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-700 via-amber-600 to-orange-700 rounded-xl opacity-0 group-hover:opacity-100 blur-lg transition duration-300" />
       <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-orange-500/30 group-hover:border-orange-400/70 transition-all duration-300">
-        <div className="aspect-video w-full">
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={`NBA highlight ${videoId}`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            loading="lazy"
-            className="w-full h-full"
-          />
+        <div ref={containerRef} className="aspect-video w-full relative bg-black/80">
+          {/* Loading State */}
+          {isLoading && !hasError && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/60">
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 border-3 border-orange-400 border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs text-orange-400/80">Loading highlight...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Error State */}
+          {hasError && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/80">
+              <div className="text-center p-4">
+                <svg className="w-12 h-12 text-red-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <p className="text-red-400 text-sm mb-2">Failed to load video</p>
+                <a 
+                  href={`https://www.youtube.com/watch?v=${videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-orange-400 text-xs underline hover:text-orange-300"
+                >
+                  Watch on YouTube →
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Thumbnail Placeholder (shows while loading) */}
+          {isLoading && !hasError && (
+            <div className="absolute inset-0 z-5">
+              <img 
+                src={thumbnailUrl}
+                alt="NBA highlight thumbnail"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Fallback to standard quality if maxres doesn't exist
+                  (e.target as HTMLImageElement).src = fallbackThumbnail
+                }}
+                loading="lazy"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-black/60 flex items-center justify-center backdrop-blur-sm hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* YouTube Iframe - only loads when in viewport */}
+          {isInView && !hasError && (
+            <iframe
+              src={youtubeUrl}
+              title={`NBA highlight ${videoId}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+              onLoad={handleIframeLoad}
+              onError={handleIframeError}
+            />
+          )}
         </div>
       </div>
     </div>

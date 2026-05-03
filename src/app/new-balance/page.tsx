@@ -197,7 +197,7 @@ const eventContent = [
   },
 ]
 
-// Instagram Component - Official Blockquote Method
+// Instagram Component - Desktop uses blockquote (interactive), Mobile uses iframe with overlay
 const InstagramEmbed = ({ username, url, caption }: { username: string; url: string; caption: string }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
@@ -219,9 +219,24 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
     return () => window.removeEventListener('resize', checkDevice)
   }, [])
 
-  // Load Instagram embed script and process embeds
+  // Extract the post/reel ID from Instagram URL
+  const getEmbedUrl = (instagramUrl: string) => {
+    const reelMatch = instagramUrl.match(/\/reel\/([A-Za-z0-9_-]+)/)
+    const postMatch = instagramUrl.match(/\/p\/([A-Za-z0-9_-]+)/)
+    const tvMatch = instagramUrl.match(/\/tv\/([A-Za-z0-9_-]+)/)
+    const id = reelMatch?.[1] || postMatch?.[1] || tvMatch?.[1]
+    
+    if (id) {
+      return `https://www.instagram.com/p/${id}/embed/`
+    }
+    return null
+  }
+
+  const embedUrl = getEmbedUrl(url)
+
+  // Load Instagram embed script (desktop only - for blockquote method)
   useEffect(() => {
-    if (isMobile) return // Don't load script on mobile
+    if (isMobile) return // Don't load script on mobile, we use iframe instead
 
     let retryCount = 0
     const maxRetries = 15
@@ -284,40 +299,7 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
     }
   }, [url, isMobile])
 
-  // Mobile view - button only
-  if (isMobile) {
-    return (
-      <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-        <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full flex flex-col">
-          <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
-            <p className="text-sm font-bold text-red-400 mb-3">@{username}</p>
-            
-            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-red-500 to-blue-500 flex items-center justify-center mb-4">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
-              </svg>
-            </div>
-
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl hover:from-red-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 mb-3"
-            >
-              <span className="text-white font-bold">View on Instagram</span>
-              <span className="text-white">→</span>
-            </a>
-
-            <p className="text-sm text-white/80 line-clamp-2">{caption}</p>
-            <p className="text-xs text-white/40 mt-3">Opens in Instagram app</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Error view
+  // Error view (for both desktop and mobile)
   if (error) {
     return (
       <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
@@ -340,7 +322,74 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
     )
   }
 
-  // Desktop view - Official Instagram Blockquote Embed
+  // MOBILE VERSION - Iframe with overlay (can't play, must tap to open Instagram)
+  if (isMobile) {
+    return (
+      <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
+        <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-red-500/30 group-hover:border-blue-500/50 transition duration-300 h-full flex flex-col">
+          <div className="p-4 flex-1 flex flex-col">
+            <p className="text-sm font-bold text-red-400 mb-2 shrink-0">@{username}</p>
+            
+            <div className="instagram-embed-wrapper min-h-[450px] relative">
+              {/* Loading spinner */}
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg z-10">
+                  <div className="w-8 h-8 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+              
+              {/* Iframe (loads but can't be interacted with due to overlay) */}
+              {embedUrl ? (
+                <>
+                  <iframe
+                    src={embedUrl}
+                    title={`Instagram post by ${username}`}
+                    className="w-full h-full min-h-[450px] pointer-events-none"
+                    frameBorder="0"
+                    scrolling="no"
+                    allow="encrypted-media; picture-in-picture; fullscreen"
+                    onLoad={() => setIsLoading(false)}
+                  />
+                  {/* Overlay that opens Instagram when tapped */}
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 z-20 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"
+                  >
+                    <div className="bg-gradient-to-r from-red-600 to-blue-600 rounded-xl px-6 py-3 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                      <div className="flex items-center gap-2">
+                        <span className="text-white font-bold">View on Instagram</span>
+                        <span className="text-white">→</span>
+                      </div>
+                    </div>
+                  </a>
+                </>
+              ) : (
+                <div className="flex items-center justify-center py-12 text-white/60">
+                  <p>Unable to load post</p>
+                </div>
+              )}
+            </div>
+
+            <p className="text-sm text-white/80 mt-3 line-clamp-2 shrink-0">{caption}</p>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 text-blue-400 text-xs hover:text-red-400 transition-colors flex items-center gap-1 shrink-0"
+            >
+              <span>View original post</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // DESKTOP VERSION - Official Instagram Blockquote Embed (fully interactive)
   return (
     <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
@@ -355,7 +404,7 @@ const InstagramEmbed = ({ username, url, caption }: { username: string; url: str
               </div>
             )}
             
-            {/* Official Instagram Blockquote Embed */}
+            {/* Official Instagram Blockquote Embed - Fully interactive on desktop */}
             <blockquote
               className="instagram-media"
               data-instgrm-permalink={url}
