@@ -11,84 +11,174 @@ import Link from 'next/link'
 const laffyGradient = 'from-cyan-700 via-teal-800 to-cyan-900'
 
 const eventContent = [
-  // Top 10 Posts (Instagram + YouTube mixed in order)
+  // Top Posts (All Instagram - Ranked by Actual Engagement)
   {
     id: 'top-1',
     type: 'instagram',
     username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DVbluZkCR99/',
-    caption: '#1: Jordan gave the home team 11 in a game to 13, last night. Performance of the night! 🏀 #basketball #hoops #ballislife',
+    url: 'https://www.instagram.com/reel/DWjT30GASRy/',
+    caption: '#1: Is @geotherealest100 tough?? #basketball #hoops #marchmadness #fyp',
     rank: 1,
   },
   {
     id: 'top-2',
-    type: 'youtube',
-    videoId: 'NbadGL63T8s',
-    title: '#2: Laffy Moments - Lafayette Streetball Highlights',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DVbluZkCR99/',
+    caption: '#2: Jordan gave the home team 11 in a game to 13, last night. Performance of the night! 🏀',
     rank: 2,
   },
   {
     id: 'top-3',
     type: 'instagram',
     username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DWjT30GASRy/',
-    caption: '#3: Is @geotherealest100 tough?? #basketball #hoops #marchmadness #fyp',
+    url: 'https://www.instagram.com/reel/DVys99vEX31/',
+    caption: '#3: We did go past 9 o\'clock, again. (8:58) #basketball #hoops',
     rank: 3,
   },
   {
     id: 'top-4',
-    type: 'youtube',
-    videoId: 'p9wPvPUCVTg',
-    title: '#4: Laffy Moments - Best of Lafayette Park',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DV808OSgc8B/',
+    caption: '#4: Lafayette Monday?!? (Permit from 5:30-10:00) #basketball #hoops',
     rank: 4,
   },
   {
     id: 'top-5',
     type: 'instagram',
     username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DW6nstjgcwx/',
-    caption: '#5: @therealsidneydean3 with the kill of the day… @problemch1ld22',
+    url: 'https://www.instagram.com/reel/DWj23DnAfNK/',
+    caption: '#5: Good shit, yeah I gotta slide up here mane I didn\'t know my folks still be getting down at this park',
     rank: 5,
   },
   {
     id: 'top-6',
     type: 'instagram',
-    username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DW5bSpCAeJg/',
-    caption: '#6: @geotherealest100 does it again… 🔥',
+    username: 'lightmeupwill',
+    url: 'https://www.instagram.com/reel/DVyunxmDFBK/',
+    caption: '#6: Back and Forth Basketball… (9:05) @thecoldestgenocide @kobe_zyhe24',
     rank: 6,
   },
   {
     id: 'top-7',
     type: 'instagram',
     username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DVyunxmDFBK/',
-    caption: '#7: Back and Forth Basketball… (9:05) @thecoldestgenocide @kobe_zyhe24',
+    url: 'https://www.instagram.com/reel/DVOtkqiifci/',
+    caption: '#7: @kobe_zyhe24 out here his 9 pm cones…',
     rank: 7,
   },
   {
     id: 'top-8',
     type: 'instagram',
     username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DVKAnwjkuW2/',
-    caption: '#8: @flyislifety said he’s hunting @thehezigod as well… 😳😳😳',
+    url: 'https://www.instagram.com/reel/DV81TB9ARjM/',
+    caption: '#8: @titolokz_95 doing y\'all like this now… #basketball #hoops',
     rank: 8,
   },
   {
     id: 'top-9',
     type: 'instagram',
-    username: 'nickwhoshotit',
-    url: 'https://www.instagram.com/reel/DWQS_TaCTzZ/',
-    caption: '#9: Come hoop at Lafayette park Mondays and Wednesdays',
+    username: 'flyislifety',
+    url: 'https://www.instagram.com/reel/DXY9iUHETcd/',
+    caption: '#9: At Laffy every Monday and Wednesday',
     rank: 9,
   },
   {
     id: 'top-10',
     type: 'instagram',
     username: 'lafayette_hoop',
-    url: 'https://www.instagram.com/reel/DVys99vEX31/',
-    caption: '#10: We did go past 9 o’clock, again. (8:58) #basketball #hoops',
+    url: 'https://www.instagram.com/reel/DWnZrXBAVl5/',
+    caption: '#10: Maybe it\'s the shoes… @ploctheruler1017',
     rank: 10,
+  },
+  {
+    id: 'top-11',
+    type: 'instagram',
+    username: 'flyislifety',
+    url: 'https://www.instagram.com/reel/DXY9ylkEVwt/',
+    caption: '#11: Simple IQ.. HAND DOWN MAN DOWN DID HE FALL FOR THE FAKE PASS???',
+    rank: 11,
+  },
+  {
+    id: 'top-12',
+    type: 'instagram',
+    username: 'nickwhoshotit',
+    url: 'https://www.instagram.com/reel/DWQS_TaCTzZ/',
+    caption: '#12: Come hoop at Lafayette park Mondays and Wednesdays',
+    rank: 12,
+  },
+  {
+    id: 'top-13',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DWSSUDVAaMV/',
+    caption: '#13: @problemch1ld22 establishing his presence… @veniceball @therealsidneydean3',
+    rank: 13,
+  },
+  {
+    id: 'top-14',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DVr9L2UEccL/',
+    caption: '#14: Lafayette Park runs going crazy 🔥',
+    rank: 14,
+  },
+  {
+    id: 'top-15',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DVyxzL_gVhz/',
+    caption: '#15: Late night hoops at Laffy 🌙',
+    rank: 15,
+  },
+  {
+    id: 'top-16',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DVyz1CKAbxh/',
+    caption: '#16: Another day, another bucket at Lafayette',
+    rank: 16,
+  },
+  {
+    id: 'top-17',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DVKAnwjkuW2/',
+    caption: '#17: @flyislifety said he\'s hunting @thehezigod as well… 😳😳😳',
+    rank: 17,
+  },
+  {
+    id: 'top-18',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DW5bSpCAeJg/',
+    caption: '#18: @geotherealest100 does it again… 🔥',
+    rank: 18,
+  },
+  {
+    id: 'top-19',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DW6nstjgcwx/',
+    caption: '#19: @therealsidneydean3 with the kill of the day… @problemch1ld22',
+    rank: 19,
+  },
+  {
+    id: 'top-20',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DXYMGa7kTmF/',
+    caption: '#20: Morning runs at Lafayette hit different ☀️',
+    rank: 20,
+  },
+  {
+    id: 'top-21',
+    type: 'instagram',
+    username: 'lafayette_hoop',
+    url: 'https://www.instagram.com/reel/DVywNu7gf_L/',
+    caption: '#21: Streetball at its finest 🏀',
+    rank: 21,
   },
 ]
 
@@ -102,15 +192,7 @@ interface InstagramItem {
   rank: number
 }
 
-interface YouTubeItem {
-  id: string
-  type: 'youtube'
-  videoId: string
-  title: string
-  rank: number
-}
-
-type EventItem = InstagramItem | YouTubeItem
+type EventItem = InstagramItem
 
 // Instagram Component - Desktop shows embed, Mobile shows button only
 const InstagramEmbed = ({ username, url, caption, rank }: { username: string; url: string; caption: string; rank?: number }) => {
@@ -232,36 +314,6 @@ const InstagramEmbed = ({ username, url, caption, rank }: { username: string; ur
   )
 }
 
-const YouTubeCard = ({ videoId, title, rank }: { videoId: string; title: string; rank?: number }) => {
-  return (
-    <div className="group relative transition duration-500 hover:-translate-y-2 h-full">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-300" />
-      <div className="relative bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-cyan-500/30 group-hover:border-teal-500/50 transition duration-300 h-full flex flex-col">
-        {rank && (
-          <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-white/20">
-            <span className="text-white font-black text-lg">{rank}</span>
-          </div>
-        )}
-        <div className="aspect-video w-full flex-shrink-0">
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="w-full h-full"
-          />
-        </div>
-        <div className="p-4 text-center flex-1 flex items-center justify-center">
-          <h3 className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2">
-            {title}
-          </h3>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function LaffyMomentsPage() {
   const [mounted, setMounted] = useState(false)
 
@@ -273,11 +325,7 @@ export default function LaffyMomentsPage() {
     return null
   }
 
-  // Type-safe filtering with type guards
-  const isInstagramItem = (item: EventItem): item is InstagramItem => item.type === 'instagram'
-  const isYouTubeItem = (item: EventItem): item is YouTubeItem => item.type === 'youtube'
-
-  const top10Posts = eventContent as EventItem[]
+  const topPosts = eventContent as EventItem[]
 
   return (
     <ThemePage theme="owyhee" gradient={laffyGradient}>
@@ -294,11 +342,11 @@ export default function LaffyMomentsPage() {
           <div className="mt-12 mb-8 text-center">
             <h1 className="text-5xl lg:text-7xl font-black tracking-tight mb-4">
               <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
-                TOP 10
+                TOP MOMENTS
               </span>
               <br />
               <span className="text-3xl lg:text-4xl font-bold text-white/80">
-                LAFFY MOMENTS
+                LAFFY HIGHLIGHTS
               </span>
             </h1>
           
@@ -307,12 +355,6 @@ export default function LaffyMomentsPage() {
                 <div className="flex items-center gap-3 px-8 py-3 bg-white/10 rounded-full border border-white/20 hover:bg-white/20 transition duration-300 backdrop-blur-sm">
                   <span className="text-xl">📸</span>
                   <span className="text-lg font-semibold">Follow on IG</span>
-                </div>
-              </Link>
-              <Link href="https://www.youtube.com/@lafayettehoop" target="_blank" rel="noopener noreferrer">
-                <div className="flex items-center gap-3 px-8 py-3 bg-white/10 rounded-full border border-white/20 hover:bg-white/20 transition duration-300 backdrop-blur-sm">
-                  <span className="text-xl">▶️</span>
-                  <span className="text-lg font-semibold">Subscribe on YouTube</span>
                 </div>
               </Link>
             </div>
@@ -325,29 +367,20 @@ export default function LaffyMomentsPage() {
           <section className="my-16">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl lg:text-4xl font-black tracking-tight bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
-                TOP 10 MOMENTS
+                ALL LAFFY MOMENTS
               </h2>
               <div className="hidden lg:block h-px flex-1 ml-8 bg-gradient-to-r from-cyan-500/50 to-transparent" />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
-              {top10Posts.map((item) => (
-                isInstagramItem(item) ? (
-                  <InstagramEmbed 
-                    key={item.id} 
-                    username={item.username} 
-                    url={item.url} 
-                    caption={item.caption} 
-                    rank={item.rank}
-                  />
-                ) : (
-                  <YouTubeCard 
-                    key={item.id} 
-                    videoId={item.videoId} 
-                    title={item.title}
-                    rank={item.rank}
-                  />
-                )
+              {topPosts.map((item) => (
+                <InstagramEmbed 
+                  key={item.id} 
+                  username={item.username} 
+                  url={item.url} 
+                  caption={item.caption}
+                  rank={item.rank}
+                />
               ))}
             </div>
           </section>
@@ -368,9 +401,10 @@ export default function LaffyMomentsPage() {
               
               <div className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-cyan-600/30 to-teal-600/30 backdrop-blur-sm border border-cyan-500/40 hover:border-teal-500/60 transition duration-300 group cursor-pointer">
                 <span className="text-3xl">🏀</span>
-                <span className="text-white font-bold text-xl tracking-wider">#LAFFYMOMENTS TOP 10</span>
+                <span className="text-white font-bold text-xl tracking-wider">#LAFFYMOMENTS</span>
                 <span className="text-3xl">🌊</span>
               </div>
+              
               <div className="flex flex-wrap justify-center gap-4 mt-6">
                 <Link href="https://www.instagram.com/lafayette_hoop" target="_blank" rel="noopener noreferrer">
                   <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyan-500/40 transition duration-300">
@@ -378,15 +412,10 @@ export default function LaffyMomentsPage() {
                     <span className="text-white/60 text-sm">@lafayette_hoop</span>
                   </div>
                 </Link>
-                <Link href="https://www.youtube.com/@lafayettehoop" target="_blank" rel="noopener noreferrer">
-                  <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyan-500/40 transition duration-300">
-                    <span className="text-lg">▶️</span>
-                    <span className="text-white/60 text-sm">YouTube Channel</span>
-                  </div>
-                </Link>
               </div>
+              
               <p className="text-white/30 text-sm mt-6">
-                The Best of Lafayette Streetball • Top 10 Moments • Where Legends Are Made • Community First
+                The Best of Lafayette Streetball • All the top moments • Where Legends Are Made • Community First
               </p>
               <p className="text-white/20 text-xs mt-4">
                 © {new Date().getFullYear()} Lafayette Hoops • All Rights Reserved
